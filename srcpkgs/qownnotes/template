@@ -1,0 +1,25 @@
+# Template file for 'qownnotes'
+pkgname=qownnotes
+version=25.3.0
+revision=1
+build_style=qmake
+build_helper=qmake6
+configure_args="USE_SYSTEM_BOTAN=1"
+hostmakedepends="pkg-config qt6-base"
+makedepends="botan-devel qt6-base-devel qt6-declarative-devel
+ aspell-devel qt6-qt5compat-devel qt6-svg-devel qt6-websockets-devel"
+depends="qt6-plugin-sqlite"
+short_desc="Plain-text file markdown note taking with Nextcloud/ownCloud integration"
+maintainer="Kevin Figueroa <kfdevart@disroot.org>"
+license="GPL-2.0-or-later"
+homepage="https://github.com/pbek/QOwnNotes"
+changelog="https://raw.githubusercontent.com/pbek/QOwnNotes/refs/tags/v${version}/CHANGELOG.md"
+distfiles="${homepage}/releases/download/v${version}/qownnotes-${version}.tar.xz"
+checksum=a6ffc1922330eb1e8336b103cac24a65e8494530fa4e7e52dcc955fe32ab4a6f
+repository=cereus-extra
+
+post_install() {
+	rename QOwnNotes qownnotes "${DESTDIR}/usr/bin/QOwnNotes"
+	vsed -i 's|Exec=QOwnNotes|Exec=qownnotes|g' PBE.QOwnNotes.desktop
+	ln -frs ${DESTDIR}/usr/bin/qownnotes ${DESTDIR}/usr/bin/QOwnNotes
+}
