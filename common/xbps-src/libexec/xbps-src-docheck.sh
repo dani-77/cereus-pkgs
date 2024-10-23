@@ -50,7 +50,7 @@ if [ "$make_check" = extended -a "$XBPS_CHECK_PKGS" != full ]; then
     exit 0
 fi
 
-if [ "$make_check" = ci-skip ] && [ "$XBPS_BUILD_ENVIRONMENT" = void-packages-ci ]; then
+if [ "$make_check" = ci-skip ] && [ "$XBPS_BUILD_ENVIRONMENT" = cereus-pkgs-ci ]; then
     msg_warn \
         "${pkgname}-${version}_${revision}: skipping here because of make_check=ci-skip. Tests should be run locally.\n"
     exit 0

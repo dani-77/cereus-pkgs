@@ -199,7 +199,7 @@ $(print_cross_targets)
     Absolute path to a directory to be bind mounted at <masterdir>/host.
     The host directory stores binary packages, sources and package dependencies
     downloaded from remote repositories.
-    If unset defaults to void-packages/hostdir.
+    If unset defaults to cereus-pkgs/hostdir.
 
 -h  Usage output.
 
@@ -214,7 +214,7 @@ $(print_cross_targets)
 -m  <masterdir>
     Absolute path to a directory to be used as masterdir.
     The masterdir is the main directory to build/store/compile packages.
-    If unset defaults to void-packages/masterdir-<host>.
+    If unset defaults to cereus-pkgs/masterdir-<host>.
 
 -N  Disable use of remote repositories to resolve dependencies.
 
@@ -457,7 +457,7 @@ check_reqhost_utils
 #
 if [ "$IN_CHROOT" ]; then
     readonly XBPS_CONFIG_FILE=/etc/xbps/xbps-src.conf
-    readonly XBPS_DISTDIR=/void-packages
+    readonly XBPS_DISTDIR=/cereus-pkgs
     readonly XBPS_MASTERDIR=/
     readonly XBPS_HOSTDIR=/host
 else
@@ -488,7 +488,7 @@ fi
 [ -s "$XBPS_CONFIG_FILE" ] && . $XBPS_CONFIG_FILE &>/dev/null
 
 # show colors unconditionally in CI
-[ "$XBPS_BUILD_ENVIRONMENT" = void-packages-ci ] && export NOCOLORS=
+[ "$XBPS_BUILD_ENVIRONMENT" = cereus-pkgs-ci ] && export NOCOLORS=
 
 # Set options passed on command line, after configuration files have been read
 [ -n "$XBPS_ARG_BUILD_ONLY_ONE_PKG" ] && XBPS_BUILD_ONLY_ONE_PKG=yes

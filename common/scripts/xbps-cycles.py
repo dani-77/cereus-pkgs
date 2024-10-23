@@ -15,7 +15,7 @@ def enum_depends(pkg, xbpsdir, cachedir):
 	'''
 	Return a pair (pkg, [dependencies]), where [dependencies] is the list
 	of dependencies for the given package pkg. The argument xbpsdir should
-	be a path to a void-packages repository. Dependencies will be
+	be a path to a cereus-pkgs repository. Dependencies will be
 	determined by invoking
 
 		<xbpsdir>/xbps-src show-build-deps <pkg>
@@ -55,7 +55,7 @@ def find_cycles(depmap, xbpsdir):
 	For a map depmap: package -> [dependencies], construct a directed graph
 	and identify any cycles therein.
 
-	The argument xbpsdir should be a path to the root of a void-packages
+	The argument xbpsdir should be a path to the root of a cereus-pkgs
 	repository. All package names in depmap will be appended to the path
 	<xbpsdir>/srcpkgs and reduced with os.path.realpath to coalesce
 	subpackages.
@@ -100,7 +100,7 @@ if __name__ == '__main__':
 	parser.add_argument('-c', '--cachedir', default=None,
 			help='Directory used to cache build dependencies (must exist)')
 	parser.add_argument('-d', '--directory',
-			default=None, help='Path to void-packages repo')
+			default=None, help='Path to cereus-pkgs repo')
 	parser.add_argument('-Q', dest='check_pkgs', action='store_const',
 			const='yes', help='Use build dependencies for check -Q')
 	parser.add_argument('-K', dest='check_pkgs', action='store_const',

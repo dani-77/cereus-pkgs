@@ -84,7 +84,7 @@ XBPS_SRC_VERSION="$XBPS_SRC_VERSION"
 
 . /etc/xbps/xbps-src.conf
 
-PATH=/void-packages:/usr/bin
+PATH=/cereus-pkgs:/usr/bin
 
 exec env -i -- SHELL=/bin/sh PATH="\$PATH" DISTCC_HOSTS="\$XBPS_DISTCC_HOSTS" DISTCC_DIR="/host/distcc" \
     ${XBPS_ARCH+XBPS_ARCH=$XBPS_ARCH} ${XBPS_CHECK_PKGS+XBPS_CHECK_PKGS=$XBPS_CHECK_PKGS} \
@@ -147,8 +147,8 @@ chroot_handler() {
     if [ -n "$IN_CHROOT" -o -z "$CHROOT_READY" ]; then
         return 0
     fi
-    if [ ! -d $XBPS_MASTERDIR/void-packages ]; then
-        mkdir -p $XBPS_MASTERDIR/void-packages
+    if [ ! -d $XBPS_MASTERDIR/cereus-pkgs ]; then
+        mkdir -p $XBPS_MASTERDIR/cereus-pkgs
     fi
 
     case "$action" in
@@ -183,7 +183,7 @@ chroot_handler() {
             ${XBPS_ALT_REPOSITORY:+XBPS_ALT_REPOSITORY=$XBPS_ALT_REPOSITORY} \
             $XBPS_COMMONDIR/chroot-style/${XBPS_CHROOT_CMD:=uunshare}.sh \
             $XBPS_MASTERDIR $XBPS_DISTDIR "$XBPS_HOSTDIR" "$XBPS_CHROOT_CMD_ARGS" \
-            /void-packages/xbps-src $XBPS_OPTIONS $action $pkg
+            /cereus-pkgs/xbps-src $XBPS_OPTIONS $action $pkg
         rv=$?
     fi
 

@@ -33,4 +33,4 @@ if [ -z "$MASTERDIR" ] || [ -z "$DISTDIR" ]; then
 	exit 1
 fi
 
-exec xbps-uchroot $EXTRA_ARGS -b $DISTDIR:/void-packages ${HOSTDIR:+-b $HOSTDIR:/host} -- $MASTERDIR $CMD $@
+exec xbps-uchroot $EXTRA_ARGS -b $DISTDIR:/cereus-pkgs ${HOSTDIR:+-b $HOSTDIR:/host} -- $MASTERDIR $CMD $@

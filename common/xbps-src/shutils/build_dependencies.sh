@@ -130,7 +130,7 @@ check_installed_pkg() {
 skip_check_step() {
     [ -z "$XBPS_CHECK_PKGS" ] ||
         [ "$XBPS_CROSS_BUILD" ] ||
-        [ "$make_check" = ci-skip  -a "$XBPS_BUILD_ENVIRONMENT" = void-packages-ci ] ||
+        [ "$make_check" = ci-skip  -a "$XBPS_BUILD_ENVIRONMENT" = cereus-pkgs-ci ] ||
         [ "$make_check" = extended -a "$XBPS_CHECK_PKGS" != full ] ||
         [ "$make_check" = no ]
 }

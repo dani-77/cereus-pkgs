@@ -1,14 +1,20 @@
-## The XBPS source packages collection
+## The Cereus XBPS source packages collection
+
+<a href="https://codeberg.org/cereus-linux/cereus-pkgs">
+    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-white-on-black.png" height="60">
+</a>
+
+The source code is mainly hosted on [Codeberg](https://codeberg.org/cereus-linux/cereus-pkgs) with a mirror available on [GitHub](https://github.com/CereusLinuxProject/cereus-pkgs). **Issues and pull requests should be made in Codeberg**.
 
 This repository contains the XBPS source packages collection to build binary packages
-for the Void Linux distribution.
+for the Cereus Linux distribution.
 
 The included `xbps-src` script will fetch and compile the sources, and install its
 files into a `fake destdir` to generate XBPS binary packages that can be installed
 or queried through the `xbps-install(1)` and `xbps-query(1)` utilities, respectively.
 
 See [Contributing](./CONTRIBUTING.md) for a general overview of how to contribute and the
-[Manual](./Manual.md) for details of how to create source packages.
+[Manual](./Manual.md) for details of how to create source packages (please note that these files are intact as they are in *void-packages* at this moment).
 
 ### Table of Contents
 
@@ -30,7 +36,7 @@ See [Contributing](./CONTRIBUTING.md) for a general overview of how to contribut
 - [Keeping your masterdir uptodate](#updating-masterdir)
 - [Building 32bit packages on x86_64](#building-32bit)
 - [Building packages natively for the musl C library](#building-for-musl)
-- [Building void base-system from scratch](#building-base-system)
+- [Building base-cereus from scratch](#building-base-cereus)
 
 ### Requirements
 
@@ -56,11 +62,11 @@ methods.
 <a name="quick-start"></a>
 ### Quick start
 
-Clone the `void-packages` git repository and install the bootstrap packages:
+Clone the `cereus-pkgs` git repository and install the bootstrap packages:
 
 ```
-$ git clone https://github.com/void-linux/void-packages.git
-$ cd void-packages
+$ git clone https://codeberg.org/cereus-linux/cereus-pkgs.git
+$ cd cereus-pkgs
 $ ./xbps-src binary-bootstrap
 ```
 
@@ -128,12 +134,12 @@ executable must be `setgid`:
     # chmod 4750 xbps-uchroot
     # usermod -a -G <group> <user>
 
-> NOTE: by default in void you shouldn't do this manually, your user must be a member of
+> NOTE: by default in Cereus you shouldn't do this manually, your user must be a member of
 the `xbuilder` group.
 
 To enable it:
 
-    $ cd void-packages
+    $ cd cereus-pkgs
     $ echo XBPS_CHROOT_CMD=uchroot >> etc/conf
 
 If for some reason it's erroring out as `ERROR clone (Operation not permitted)`, check that
@@ -163,7 +169,7 @@ or from your local repository.
 There is also the `bootstrap` command, which will build all necessary `bootstrap` packages from
 scratch. This is usually not recommended, since those packages are built using your host system's
 toolchain and are neither fully featured nor reproducible (your host system may influence the
-build) and thus should only be used as a stage 0 for bootstrapping new Void systems.
+build) and thus should only be used as a stage 0 for bootstrapping new Cereus systems.
 
 If you still choose to use `bootstrap`, use the resulting stage 0 container to rebuild all
 `bootstrap` packages again, then use `binary-bootstrap` (stage 1) and rebuild the `bootstrap`
@@ -203,7 +209,7 @@ and edit it accordingly to your needs.
 
 The following directory hierarchy is used with a default configuration file:
 
-         /void-packages
+         /cereus-pkgs 
             |- common
             |- etc
             |- srcpkgs
@@ -221,7 +227,7 @@ The following directory hierarchy is used with a default configuration file:
             |  |- builddir -> ...
             |  |- destdir -> ...
             |  |- host -> bind mounted from <hostdir>
-            |  |- void-packages -> bind mounted from <void-packages>
+            |  |- cereus-pkgs -> bind mounted from <cereus-pkgs>
 
 
 The description of these directories is as follows:
@@ -241,7 +247,7 @@ The description of these directories is as follows:
 The simplest form of building package is accomplished by running the `pkg` target in `xbps-src`:
 
 ```
-$ cd void-packages
+$ cd cereus-pkgs
 $ ./xbps-src pkg <pkgname>
 ```
 
@@ -382,7 +388,7 @@ Install distcc on the host (machine that executes xbps-src) as well.
 Unless you want to use the host as worker from other machines, there is no need
 to modify the configuration.
 
-On the host you can now enable distcc in the `void-packages/etc/conf` file:
+On the host you can now enable distcc in the `cereus-pkgs/etc/conf` file:
 
     XBPS_DISTCC=yes
     XBPS_DISTCC_HOSTS="localhost/2 --localslots_cpp=24 192.168.2.101/9 192.168.2.102/2"
@@ -446,15 +452,15 @@ To use xbps-src in your Linux distribution use the following instructions. Let's
 If `xbps-uunshare` does not work because of lack of `user_namespaces(7)` support,
 try other [chroot methods](#chroot-methods).
 
-Clone the `void-packages` git repository:
+Clone the `cereus-pkgs` git repository:
 
-    $ git clone https://github.com/void-linux/void-packages.git
+    $ git clone https://codeberg.org/cereus-linux/cereus-pkgs.git
 
 and `xbps-src` should be fully functional; just start the `bootstrap` process, i.e:
 
     $ ./xbps-src binary-bootstrap
 
-The default masterdir is created in the current working directory, i.e. `void-packages/masterdir-<arch>`, where `<arch>` for the default masterdir is is the native xbps architecture.
+The default masterdir is created in the current working directory, i.e. `cereus-pkgs/masterdir-<arch>`, where `<arch>` for the default masterdir is is the native xbps architecture.
 
 <a name="remaking-masterdir"></a>
 ### Remaking the masterdir
@@ -497,19 +503,19 @@ Your new masterdir is now ready to build packages natively for the musl C librar
 
     $ ./xbps-src -A x86_64-musl pkg ...
 
-<a name="building-base-system"></a>
-### Building void base-system from scratch
+<a name="building-base-cereus"></a>
+### Building base-cereus from scratch
 
-To rebuild all packages in `base-system` for your native architecture:
+To rebuild all packages in `base-cereus` for your native architecture:
 
-    $ ./xbps-src -N pkg base-system
+    $ ./xbps-src -N pkg base-cereus
 
 It's also possible to cross compile everything from scratch:
 
-    $ ./xbps-src -a <target> -N pkg base-system
+    $ ./xbps-src -a <target> -N pkg base-cereus
 
-Once the build has finished, you can specify the path to the local repository to `void-mklive`, i.e:
+Once the build has finished, you can specify the path to the local repository to `cereus-mklive`, i.e:
 
-    # cd void-mklive
+    # cd cereus-mklive
     # make
     # ./mklive.sh ... -r /path/to/hostdir/binpkgs

@@ -7,7 +7,7 @@
 # containers.
 #
 # 2 extra steps required when using this chroot-style:
-# 1. Symlink / to masterdir inside the void-packages repo
+# 1. Symlink / to masterdir inside the cereus-pkgs repo
 # 2. write the arch of the host system, as dictated by xbps-uhelper arch
 # into /.xbps_chroot_init
 #
@@ -77,7 +77,7 @@ if [ ! -L "$MASTERDIR" -o "$(readlink "$MASTERDIR")" != "/" ]; then
 	exit 1
 fi
 
-fake_mount "$DISTDIR" "$MASTERDIR"/void-packages
+fake_mount "$DISTDIR" "$MASTERDIR"/cereus-pkgs
 
 # Do the same for hostdir
 if [ -n "$HOSTDIR" ]; then
@@ -129,7 +129,7 @@ for m in $mounts; do
 	mkdir -p "$m"
 done
 
-rm -f "$MASTERDIR"/void-packages
-mkdir -p "$MASTERDIR"/void-packages
+rm -f "$MASTERDIR"/cereus-pkgs
+mkdir -p "$MASTERDIR"/cereus-pkgs
 
 exit $ret
