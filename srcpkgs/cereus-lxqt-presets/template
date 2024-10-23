@@ -1,6 +1,6 @@
 # Template file for 'cereus-lxqt-presets'
 pkgname=cereus-lxqt-presets
-version=2024.02.20
+version=2024.10.20
 revision=1
 repository="cereus-core"
 conf_files="
@@ -21,9 +21,9 @@ maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
 homepage="https://codeberg.org/cereus-linux/presets"
 changelog="${homepage}/commits/main/lxqt"
-_commit="a0f759925101fb0724e5e54afb997efe3981798d"
+_commit="76366d53d45d303660cecdc8a25a57df3fd60542"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=690bab356a19b03f768c582ed841b4e12fab7af1890998da8ca5aaeb60f250de
+checksum=0ba10198751aaf832ee5be80e32a3e68db81bb232ee7eb7da8a69719ec79ccbc
 
 do_install() {
     vcopy lxqt/* ./

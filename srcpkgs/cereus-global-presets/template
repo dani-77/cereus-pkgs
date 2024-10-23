@@ -1,24 +1,25 @@
 # Template file for 'cereus-global-presets'
 pkgname=cereus-global-presets
-version=2024.02.20
+version=2024.10.20
 revision=1
 repository="cereus-core"
 conf_files="
     /etc/skel/.profile
     /etc/bash/bashrc.d/*.sh"
 depends="cereus-themes-presets bluez gst-libav libva-utils gst-plugins-base1 gst-plugins-good1 libcups-filters python3-cups python3-cupshelpers system-config-printer system-config-printer-udev vpm vsv numlockx xdg-user-dirs octoxbps-git touchegg plymouth cereus-plymouth-theme sof-firmware libspa-bluetooth NetworkManager chrony elogind alsa-pipewire pipewire gstreamer1-pipewire wireplumber pulseaudio-utils polyglot-prompt"
-_commit="a0f759925101fb0724e5e54afb997efe3981798d"
+_commit="bb3afebf00c1d56225733656a0875c594ab341b0"
 short_desc="Cereus Linux global default configurations"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
 homepage="https://codeberg.org/cereus-linux/presets"
 changelog="${homepage}/commits/main/global"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=690bab356a19b03f768c582ed841b4e12fab7af1890998da8ca5aaeb60f250de
+checksum=cca0e0314310b0cec75392d3621c358079f7d50aeaf73b154e1959dda9f11459
 
 do_install() {
     cd global/etc
     vinstall skel/.profile 0644 /etc/skel/
+    vinstall fastfetch/config.jsonc 0644 /etc/fastfetch
 
     cd bash/bashrc.d
     vinstall 10-polyglot-prompt.sh 0644 /etc/bash/bashrc.d/
