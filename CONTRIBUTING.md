@@ -187,9 +187,6 @@ Please abstain from temporarily closing a pull request while revising the templa
 
 #### Publishing the package
 
-Once the reviewers have merged the pull request, our [build server](http://build.voidlinux.org) is automatically triggered and builds
-all packages in the pull request for all supported platforms. Upon completion, the packages are available to all Void Linux users.
-
 Since, unlike Void, we lack a build server, once the reviewers have merged the pull request, our binary repository maintainers will locally build all packages in the pull request for all supported architechtures, sign them and submit to all our mirrors. Upon completion, the packages are available to all Cereus Linux users.
 
 ## Testing Pull Requests
