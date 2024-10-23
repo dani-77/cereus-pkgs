@@ -1,15 +1,15 @@
-# Contributing to void-packages
+# Contributing to cereus-pkgs
 
-void-packages is the backbone of the Void Linux distribution. It contains all the definitions to build packages from source.
+cereus-pkgs is the backbone of the Cereus Linux distribution. It contains all the definitions to build packages from source.
 
-This document describes how you, as a contributor, can help with adding packages, correcting bugs and adding features to void-packages.
+This document describes how you, as a contributor, can help with adding packages, correcting bugs and adding features to cereus-pkgs.
 
 ## Package Requirements
 
-To be included in the Void repository, software must meet at least one of the following requirements.
+To be included in the Cereus repository, software must meet at least one of the following requirements.
 Exceptions to the list are possible, and might be accepted, but are extremely unlikely.
 If you believe you have an exception, start a PR and make an argument for why that particular piece of software,
-while not meeting any of the following requirements, is a good candidate for the Void packages system.
+while not meeting any of the following requirements, is a good candidate for the Cereus packages system.
 
 1. **System**: The software should be installed system-wide, not per-user.
 
@@ -17,45 +17,44 @@ while not meeting any of the following requirements, is a good candidate for the
 
 1. **Required**: Another package either within the repository or pending inclusion requires the package.
 
-In particular, new themes are highly unlikely to be accepted.
+In particular, new themes with too many variants are unlikely to be accepted.
 Simple shell scripts are unlikely to be accepted unless they provide considerable value to a broad user base.
-New fonts may be accepted if they provide value beyond aesthetics (e.g. they contain glyphs for a script missing in already packaged fonts).
 Packages related to cryptocurrencies (wallets, miners, nodes, etc) are not accepted.
 
-Browser forks, including those based on Chromium and Firefox, are generally not accepted.
-Such forks require heavy patching, maintenance and hours of build time.
+Complex or heavy to build packages (like Chromium or Firefox based browsers) are preferred to use precompiled binaries. This also applies for Electron-based packages since some depend in a Electron version that is not available in Void repository (and it is unlikely that we maintain newer versions). Otherwise, it is likely it won't be accepted. However, if you're willing to take care of it, chances it get accepted will be higher. 
 
-Software need to be used in version announced by authors as ready to use by the general public - usually called releases.
-Betas, arbitrary VCS revisions, templates using tip of development branch taken at build time and releases created by the package maintainer won't be accepted.
+An external template or binary repository may be added, as submodule in this repository (see MEGAsync submodule as example) or as a drop-in repository file (see [ungoogled-chromium-repo](https://codeberg.org/cereus-linux/cereus-pkgs/src/branch/master/srcpkgs/ungoogled-chromium-repo/template)), after proper review.
 
-## Creating, updating, and modifying packages in Void by yourself
+Preferrably and when available, use software in their stable releases. Betas, templates using tip of development branch and releases created by the package maintainer may be accepted if the package is not available in a stable release or it does provides a considerable value that is not available on stable releases.
 
-If you really want to get a new package or package update into Void Linux, we recommend you contribute it yourself.
+For obvious reasons, packages already available in Void repository are highly unlikely to be accepted unless it needs to be adapted for Cereus or there's a patch or fork that provides functionality not present in the Void package. A good example for this is `grub-cereus`: it was patched so Cereus have control over its default configuration and patches from `grub-btrfs` were added.
+
+## Creating, updating, and modifying packages in Cereus by yourself
+
+If you really want to get a new package or package update into Cereus Linux, we recommend you contribute it yourself.
 
 We provide a [comprehensive Manual](./Manual.md) on how to create new packages.
 There's also a [manual for xbps-src](./README.md), which is used to build package files from templates.
 
-For this guide, we assume you have basic knowledge about [git](http://git-scm.org), as well as a [GitHub Account](http://github.com) with [SSH set up](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
+For this guide, we assume you have basic knowledge about [git](http://git-scm.org), as well as a [Codeberg Account](http://codeberg.org) with [SSH set up](https://docs.codeberg.org/security/ssh-key/).
 
-You should also [set the email](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address) on your GitHub account and in git so your commits are associated with your GitHub account properly.
+You should also [set the email](https://docs.codeberg.org/git/configuring-git/) on your Codeberg account and in git so your commits are associated with your Codeberg account properly.
 
-To get started, [fork](https://help.github.com/articles/fork-a-repo) the void-linux `void-packages` git repository on GitHub and clone it:
+To get started, [fork](https://docs.codeberg.org/collaborating/pull-requests-and-git-flow/) the `cereus-pkgs` git repository on GitHub and clone it:
 
-    $ git clone git@github.com:<user>/void-packages.git
-
+    $ git clone git@codeberg.org:cereus-linux/cereus-pkgs.git
 To keep your forked repository up to date, setup the `upstream` remote to pull in new changes:
 
-    $ git remote add upstream https://github.com/void-linux/void-packages.git
+    $ git remote add upstream https://codeberg.org/cereus-linux/cereus-pkgs.git
     $ git pull --rebase upstream master
 
-This can also be done with the `github-cli` tool:
+This can also be done with the [*codeberg-cli*](https://codeberg.org/Aviac/codeberg-cli) tool:
 
-    $ gh repo fork void-linux/void-packages
-    $ gh repo clone <user>/void-packages
+    $ berg repo fork cereus-linux/cereus-pkgs
 
 This automatically sets up the `upstream` remote, so `git pull --rebase upstream master` can still be used to keep your fork up-to-date.
 
-Using the GitHub web editor for making changes is strongly discouraged, because you will need to clone the repo anyways to edit and test your changes.
+Using the Codeberg web editor for making changes is strongly discouraged, because you will need to clone the repo anyways to edit and test your changes.
 
 Using the `master` branch of your fork for contributing is also strongly discouraged.
 It can cause many issues with updating your pull request (also called a PR), and having multiple PRs open at once.
@@ -69,7 +68,7 @@ You can use the helper tool `xnew`, from the [xtools](https://github.com/leahneu
 
     $ xnew pkgname subpkg1 subpkg2 ...
 
-Templates must have the name `void-packages/srcpkgs/<pkgname>/template`, where `pkgname` is the same as the `pkgname` variable in the template.
+Templates must have the name `cereus-pkgs/srcpkgs/<pkgname>/template`, where `pkgname` is the same as the `pkgname` variable in the template.
 
 For deeper insights on the contents of template files, please read the [manual](./Manual.md), and be sure to browse the existing template files in the `srcpkgs` directory of this repository for concrete examples.
 
@@ -84,8 +83,8 @@ The checksum can be updated automatically with the `xgensum` helper from the [xt
 
 ### Adopting a template
 
-If a template is orphaned (maintained by `orphan@voidlinux.org`) or the current `maintainer` has not contributed to
-Void in over a year, template maintainership can be adopted by someone else. To ensure a template gets the care it needs,
+If a template is orphaned or the current `maintainer` has not contributed to
+Cereus in a long time, template maintainership can be adopted by someone else. To ensure a template gets the care it needs,
 template adopters should be familiar with the package and have an established history of contributions to Void.
 Those who have contributed several updates, especially for the template in question, are good candidates for template
 maintainership.
@@ -107,13 +106,11 @@ rebuild) is not necessary either.
 
 ### Committing your changes
 
-After making your changes, please check that the package builds successfully. From the top level directory of your local copy of the `void-packages` repository, run:
+After making your changes, please check that the package builds successfully. From the top level directory of your local copy of the `cereus-pkgs` repository, run:
 
     $ ./xbps-src pkg <pkgname>
 
-Your package must build successfully for at least x86, but we recommend also trying a cross-build for armv6l* as well, e.g.:
-
-    $ ./xbps-src -a armv6l pkg <pkgname>
+Your package should build successfully for at least `x86_64`, unless it is specific to either `x86_64-musl` or `i686` (like `musl-locales`)
 
 When building for `x86_64*` or `i686`, building with the `-Q` flag or with `XBPS_CHECK_PKGS=yes` set in `etc/conf` (to run the check phase) is strongly encouraged.
 Also, new packages and updates will not be accepted unless they have been runtime tested by installing and running the package.
@@ -151,28 +148,14 @@ If you want to describe your changes in more detail, explain in the commit body 
 
 ### Starting a pull request
 
-Once you have successfully built the package, you can [create a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request). Pull requests are also known as PRs.
+Once you have successfully built the package, you can [create a pull request](https://docs.codeberg.org/collaborating/pull-requests-and-git-flow/). Pull requests are also known as PRs.
 
-Most pull requests should only contain a single package and dependencies which are not part of void-packages yet.
+Most pull requests should only contain a single package and dependencies which are not part of cereus-pkgs yet.
 
 If you make updates to packages containing a soname bump, you also need to update `common/shlibs` and revbump all packages that are dependant.
 There should be a commit for each package revbump, and those commits should be part of the same pull request.
 
-When you make changes to your pull request, please *do not close and reopen your pull request*. Instead, just [forcibly git push](#review), overwriting any old commits. Closing and opening your pull requests repeatedly spams the Void maintainers.
-
-#### Continuous Integration
-
-Pull requests are automatically submitted for Continuous Integration (CI) testing to ensure packages build and pass their tests (on native builds) on various combinations of C library and architecture.
-Packages that take longer than 120 minutes or need more than 14G of storage to complete their build (for example, Firefox or the Linux kernel) will fail CI and should include `[ci skip]` in the PR title or body (the comment field when the PR is being opened) to avoid wasting CI builder time.
-Use your best judgment on build times based on your local building experience. If you skip CI when submitting a PR, please build and cross-build for a variety of architectures locally, with both glibc and musl, and note your local results in PR comments.
-Make sure to cover 64-bit and 32-bit architectures.
-
-If you notice a failure in CI that didn't happen locally, that is likely because you didn't run tests locally.
-Use `./xbps-src -Q pkg <package>` to do so.
-Some tests won't work in the CI environment or at all, and their templates should encode this information using the `make_check` variable.
-
-Continuous Integration will also check if the templates you have changed
-comply with the our guidelines. At the moment not all packages comply with the rules, so if you update a package, it may report errors about places you haven't touched. Please feel free to fix those errors too.
+When you make changes to your pull request, please *do not close and reopen your pull request*. Instead, just [forcibly git push](#review), overwriting any old commits. Closing and opening your pull requests repeatedly spams the Cereus maintainers
 
 #### Review
 
@@ -200,31 +183,29 @@ Once you have applied all requested changes, the reviewers will merge your reque
 If the pull request becomes inactive for some days, the reviewers may or may not warn you when they are about to close it.
 If it stays inactive further, it will be closed.
 
-Please abstain from temporarily closing a pull request while revising the templates. Instead, leave a comment on the PR describing what still needs work, [mark it as a draft](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request#converting-a-pull-request-to-a-draft), or add "[WIP]" to the PR title. Only close your pull request if you're sure you don't want your changes to be included.
+Please abstain from temporarily closing a pull request while revising the templates. Instead, leave a comment on the PR describing what still needs work, mark it as a draft, or add "[WIP]" to the PR title. Only close your pull request if you're sure you don't want your changes to be included.
 
 #### Publishing the package
 
 Once the reviewers have merged the pull request, our [build server](http://build.voidlinux.org) is automatically triggered and builds
 all packages in the pull request for all supported platforms. Upon completion, the packages are available to all Void Linux users.
 
+Since, unlike Void, we lack a build server, once the reviewers have merged the pull request, our binary repository maintainers will locally build all packages in the pull request for all supported architechtures, sign them and submit to all our mirrors. Upon completion, the packages are available to all Cereus Linux users.
+
 ## Testing Pull Requests
 
 While it is the responsibility of the PR creator to test changes before sending it, one person can't test all configuration options, usecases, hardware, etc.
 Testing new package submissions and updates is always helpful, and is a great way to get started with contributing.
-First, [clone the repository](https://github.com/void-linux/void-packages#quick-start) if you haven't done so already.
-Then check out the pull request, either with `github-cli`:
+First, [clone the repository](https://codeberg.org/cereus-linux/cereus-pkgs#quick-start) if you haven't done so already.
+Then check out the pull request:
 
-    $ gh pr checkout <number>
+If your local cereus-pkgs repository is cloned from your fork, you may need to add the main repository as a remote first:
 
-Or with `git`:
-
-If your local void-packages repository is cloned from your fork, you may need to add the main repository as a remote first:
-
-    $ git remote add upstream https://github.com/void-linux/void-packages.git
+    $ git remote add upstream https://codeberg.org/cereus-linux/cereus-pkgs.git
 
 Then fetch and check out the PR (replacing `<remote>` with either `origin` or `upstream`):
 
     $ git fetch <remote> pull/<number>/head:<branch-name>
     $ git checkout <branch-name>
 
-Then [build and install](https://github.com/void-linux/void-packages#building-packages) the package and test its functionality.
+Then [build and install](https://codeberg.org/cereus-linux/cereus-pkgs#building-packages) the package and test its functionality.
