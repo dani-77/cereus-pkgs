@@ -1,6 +1,6 @@
 # Template file for 'lightly-qt6'
 pkgname=lightly-qt6
-version=0.5.3
+version=0.5.4
 revision=1
 build_style=cmake
 configure_args="-DBUILD_TESTING=OFF"
@@ -15,7 +15,7 @@ homepage="https://github.com/Bali10050/Lightly"
 distfiles="${homepage}/archive/refs/tags/v${version}.tar.gz"
 conflicts="lightly-kf6-git"
 replaces="lightly-kf6-git"
-checksum=33d9dfa7f10adabb94c3ee4660641da2018d39df977de2887182881729562c5b
+checksum=70842248f801e5718949f6e51fb1592c2936674abf5f1707a1da9e9f3256211a
 
 lightly-qt6-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision}"
