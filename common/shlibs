@@ -4540,7 +4540,7 @@ libcalamares.so.3.3 calamares-3.3.1_1
 libcalamaresui.so.3.3 calamares-3.3.1_1
 libvulkan.so.1 heroic-bin-2.4.3_1
 libvulkan.so.1 brave-bin-1.39.122_1
-libxviewer.so xviewer-3.2.10_2
+libxviewer.so libxviewer-3.4.6_3
 libQt5DBus.so.5 xp-pen-tablet-3.2.3.220323_1
 libicuuc.so.56 xp-pen-tablet-3.2.3.220323_1
 libQt5Network.so.5 xp-pen-tablet-3.2.3.220323_1

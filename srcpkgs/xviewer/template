@@ -1,29 +1,50 @@
 # Template file for 'xviewer'
 pkgname=xviewer
 version=3.4.6
-revision=2
+revision=3
 build_style=meson
-repository=cereus-extra
-makedepends="gobject-introspection librsvg-devel itstool gtk-doc cmake libglib-devel pkg-config gtk+3-devel libpeas-devel cinnamon-desktop-devel xapps-devel gettext glib-devel exempi-devel libexif-devel libjpeg-turbo-devel lcms2-devel"
-depends="xapps gtk+3 cinnamon-desktop libpeas libexif libjpeg-turbo exempi librsvg webp-pixbuf-loader"
-short_desc="A simple and easy to use image viewer. X-Apps Project."
+build_helper=gir
+configure_args="$(vopt_feature exempi) $(vopt_feature exif) $(vopt_feature jpeg)
+ $(vopt_feature lcms) $(vopt_feature rsvg)"
+hostmakedepends="itstool gtk-doc cmake pkg-config gettext-devel"
+makedepends="libglib-devel gtk+3-devel libpeas-devel cinnamon-desktop-devel
+ xapps-devel glib-devel $(vopt_if exempi exempi-devel)
+ $(vopt_if exif libexif-devel) $(vopt_if jpeg libjpeg-turbo-devel)
+ $(vopt_if lcms lcms2-devel) $(vopt_if rsvg librsvg-devel)"
+
+build_options="exempi exif jpeg lcms rsvg"
+desc_option_exempi="Enable XMP support"
+desc_option_exif="Enable EXIF support"
+desc_option_jpeg="Enable JPEG support"
+desc_option_lcms="Enable LittleCMS 2 support"
+desc_option_rsvg="Enable SVG support"
+
+build_options_default="exempi exif jpeg lcms rsvg"
+
+depends="webp-pixbuf-loader yelp libheif libavif"
+short_desc="Simple and easy to use image viewer"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-license="GPL-2.0"
+license="GPL-2.0-or-later AND LGPL-2.1-or-later"
 homepage="https://github.com/linuxmint/xviewer"
 distfiles="${homepage}/archive/refs/tags/${version}.tar.gz"
 checksum=f0dcb433b2fd849d140a4090b136530b4795a9f911231ad7a02a6606d74760dc
+repository=cereus-extra
 
-post_install() {
-	vlicense COPYING
+libxviewer_package() {
+	short_desc+=" - runtime library"
+	pkg_install() {
+		vmove usr/lib/xviewer/libxviewer.so
+		ln -srf ${PKGDESTDIR}/usr/lib/xviewer/libxviewer.so ${PKGDESTDIR}/usr/lib/
+	}
 }
 
 xviewer-devel_package() {
-	depends="${sourcepkg}>=${version}_${revision}
-	 libpeas-devel libpeas-devel xapps-devel"
+	depends="libglib-devel gtk+3-devel libxviewer>=${version}_${revision}"
 	short_desc+=" - development files"
 	pkg_install() {
 		vmove usr/include
 		vmove usr/lib/pkgconfig
 		vmove usr/share/gtk-doc
+		vmove usr/share/xviewer/gir-1.0
 	}
 }
