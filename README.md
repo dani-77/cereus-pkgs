@@ -14,7 +14,7 @@ files into a `fake destdir` to generate XBPS binary packages that can be install
 or queried through the `xbps-install(1)` and `xbps-query(1)` utilities, respectively.
 
 See [Contributing](./CONTRIBUTING.md) for a general overview of how to contribute and the
-[Manual](./Manual.md) for details of how to create source packages (please note that these files are intact as they are in *void-packages* at this moment).
+[Manual](./Manual.md) for details of how to create source packages (please note that the latter one is intact as it is in *void-packages* at this moment).
 
 ### Table of Contents
 
