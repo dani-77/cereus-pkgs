@@ -1,29 +1,31 @@
 # Template file for 'youtube-music-bin'
+# This AUR PKGBUILD was used as reference: https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=youtube-music-bin
+
 pkgname=youtube-music-bin
+_pkgname=${pkgname%-bin}
 version=3.6.2
 revision=1
-repository="cereus-extra"
 archs="x86_64"
 build_style=fetch
-#conf_files=""
-hostmakedepends="bsdtar"
-makedepends="setconf"
-depends="gtk+3 libsecret nss libnotify"
-short_desc="YouTube Music Desktop App bundled with custom plugins (and built-in ad blocker / downloader)"
+hostmakedepends="setconf"
+depends="libsecret libnotify"
+short_desc="YouTube Music Desktop App bundled with custom plugins"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="MIT"
 homepage="https://th-ch.github.io/youtube-music"
-changelog="https://github.com/th-ch/youtube-music/blob/master/changelog.md#v${version//./}"
-distfiles="https://github.com/th-ch/youtube-music/releases/download/v${version}/${pkgname%-bin}_${version}_amd64.deb
-https://github.com/th-ch/youtube-music/raw/v${version}/license"
+changelog="https://raw.githubusercontent.com/th-ch/youtube-music/refs/heads/master/changelog.md"
+# License is missing in deb package
+distfiles="https://github.com/th-ch/youtube-music/releases/download/v${version}/${_pkgname}_${version}_amd64.deb
+ https://github.com/th-ch/youtube-music/raw/v${version}/license"
 checksum="3b182742d06a6ac8047a4759824290f5298303719644ebdb647b40b4ee7f0661
  e7e14b3b771ecadb23f6ee0b6f99d1553e385e35cdb44fc8e36ee7c878dacd08"
+repository="cereus-extra"
 
 do_install() {
-	ar x ${pkgname%-bin}_${version}_amd64.deb
-	bsdtar xfv data.tar.xz -C "${DESTDIR}"
-	setconf "${DESTDIR}/usr/share/applications/${pkgname%-bin}.desktop" Exec "${pkgname%-bin} %U"
-	vbin ${FILESDIR}/${pkgname%-bin}.sh ${pkgname%-bin}
+	vextract -C "${DESTDIR}" ${_pkgname}_${version}_amd64.deb
+	setconf "${DESTDIR}/usr/share/applications/${_pkgname}.desktop" \
+		Exec "${_pkgname} %U"
+	vbin ${FILESDIR}/${_pkgname}.sh ${_pkgname}
 }
 
 post_install() {
