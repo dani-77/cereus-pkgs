@@ -2,7 +2,6 @@
 pkgname=xfwm4-gaps
 version=4.18.0
 revision=4
-repository="cereus-extra"
 build_style=gnu-configure
 configure_args="--with-locales-dir=/usr/share/locale"
 hostmakedepends="pkg-config intltool"
@@ -12,12 +11,13 @@ makedepends="libxfce4ui-devel startup-notification-devel
 depends="hicolor-icon-theme desktop-file-utils"
 short_desc="Next generation window manager (patched with window gaps support)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-replaces="xfwm4"
-conflicts="xfwm4 xfwm4-lxqt"
 license="GPL-2.0-or-later"
 homepage="https://xfce.org/"
 distfiles="https://archive.xfce.org/src/xfce/xfwm4/${version%.*}/xfwm4-${version}.tar.bz2"
 checksum=92cd1b889bb25cb4bc06c1c6736c238d96e79c1e706b9f77fad0a89d6e5fc13f
+replaces="xfwm4>=4.18.0_1"
+conflicts="xfwm4 xfwm4-lxqt"
+repository=cereus-extra
 
 post_patch() {
 	# compositor may be buggy on old and big endian hardware
