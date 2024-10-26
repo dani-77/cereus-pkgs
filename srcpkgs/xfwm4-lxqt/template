@@ -2,7 +2,6 @@
 pkgname=xfwm4-lxqt
 version=4.18.0
 revision=4
-repository="cereus-extra"
 build_style=gnu-configure
 configure_args="--with-locales-dir=/usr/share/locale"
 hostmakedepends="pkg-config intltool"
@@ -10,13 +9,14 @@ makedepends="libxfce4ui-devel startup-notification-devel
  libXcomposite-devel libXdamage-devel libXfixes-devel libXrandr-devel
  libXrender-devel libXpresent-devel libwnck-devel"
 depends="hicolor-icon-theme desktop-file-utils"
-short_desc="Next generation window manager (LXQt integration with window gaps support)"
+short_desc="Next Generation WM with LXQt integration and window gaps support"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-conflicts="xfwm4 xfwm4-gaps"
 license="GPL-2.0-or-later"
 homepage="https://xfce.org/"
 distfiles="https://archive.xfce.org/src/xfce/xfwm4/${version%.*}/xfwm4-${version}.tar.bz2"
 checksum=92cd1b889bb25cb4bc06c1c6736c238d96e79c1e706b9f77fad0a89d6e5fc13f
+conflicts="xfwm4 xfwm4-gaps"
+repository=cereus-extra
 
 post_patch() {
 	# compositor may be buggy on old and big endian hardware
