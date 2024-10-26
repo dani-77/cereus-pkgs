@@ -32,9 +32,9 @@ repository=cereus-extra
 
 libxviewer_package() {
 	short_desc+=" - runtime library"
+	shlib_provides="libxviewer.so"
 	pkg_install() {
 		vmove usr/lib/xviewer/libxviewer.so
-		ln -srf ${PKGDESTDIR}/usr/lib/xviewer/libxviewer.so ${PKGDESTDIR}/usr/lib/
 	}
 }
 
