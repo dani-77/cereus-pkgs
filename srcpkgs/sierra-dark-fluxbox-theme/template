@@ -1,26 +1,25 @@
 # Template file for 'sierra-dark-fluxbox-theme'
 pkgname=sierra-dark-fluxbox-theme
 version=2024.04.12
-revision=1
-theme_dir=usr/share/fluxbox/styles/${pkgname}
-repository="cereus-extra"
-wrksrc=Sierra-Dark-Fluxbox-main
+revision=2
+_commit="4928dc6aa26d67172f1ecd5a4441f2120f1915d8"
+_theme_dir="usr/share/fluxbox/styles/sierra-dark"
 depends="fonts-roboto-ttf"
 short_desc="MacOS Sierra inspired dark theme for Fluxbox window manager"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-license="GPL-3.0"
+license="GPL-3.0-only"
 homepage="https://codeberg.org/kf_art/sierra-dark-fluxbox"
-_commit="4928dc6aa26d67172f1ecd5a4441f2120f1915d8"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
 checksum=f3178488df88b2892df6b2e881089c5371721edec0a90b569c89ee2338bc6faf
+repository=cereus-extra
 
 do_install() {
-    vmkdir ${theme_dir}
+	vmkdir "${_theme_dir}"
 
-    for file in pixmaps preview* README.md; do
-        vcopy ${file} ${theme_dir}/
-    done
+	for file in pixmaps preview*; do
+		vcopy "${file}" "${_theme_dir}/"
+	done
 
-    vinstall theme.cfg 644 ${theme_dir}/
-    vlicense LICENSE
+	vinstall theme.cfg 644 "${_theme_dir}/"
+	vdoc README.md
 }
