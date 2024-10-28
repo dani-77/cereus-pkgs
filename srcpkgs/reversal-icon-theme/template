@@ -1,168 +1,115 @@
 # Template file for 'reversal-icon-theme'
 pkgname=reversal-icon-theme
 version=2023.05.13
-revision=1
-build_style=meta
-repository=cereus-extra
-depends="${pkgname}-yellow
-${pkgname}-blue
-${pkgname}-green
-${pkgname}-purple
-${pkgname}-brown
-${pkgname}-grey
-${pkgname}-red
-${pkgname}-black
-${pkgname}-orange
-${pkgname}-pink"
-nostrip=yes
-create_wrksrc=no
-icondir=usr/share/icons
-hostmakedepends="gtk-update-icon-cache"
+revision=2
 _commit="bdae2ea365731b25a869fc2c8c6a1fb849eaf5b2"
-build_wrksrc="Reversal-icon-theme-${_commit}"
-short_desc="A colorful Design Rectangle icon theme for Linux desktops"
+build_style=meta
+depends="reversal-icon-theme-yellow reversal-icon-theme-blue
+ reversal-icon-theme-green reversal-icon-theme-purple reversal-icon-theme-brown
+ reversal-icon-theme-grey reversal-icon-theme-red reversal-icon-theme-black
+ reversal-icon-theme-orange reversal-icon-theme-pink"
+short_desc="Colorful Design Rectangle icon theme for Linux desktops"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-license="GPL-3.0"
+license="GPL-3.0-only"
 homepage="https://github.com/yeyushengfan258/Reversal-icon-theme"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
 checksum=3249e248efb24e8d57ae5cc556caf9763a6c1b31ced04885ea362188b7d3500a
+_icondir="usr/share/icons"
+repository=cereus-extra
+
+do_install() {
+	vmkdir "${_icondir}"
+	# -a flag does not include the default (yellow) variant
+	./install.sh -d "${DESTDIR}/${_icondir}"
+	# Install the rest of variants
+	./install.sh -a -d "${DESTDIR}/${_icondir}"
+}
 
 reversal-icon-theme-yellow_package() {
-    color=yellow
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - yellow variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal"
+		vmove "usr/share/icons/Reversal-dark"
 	}
 }
 
 reversal-icon-theme-blue_package() {
-    color=blue
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - blue variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-blue*"
 	}
 }
 
 reversal-icon-theme-green_package() {
-    color=green
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - green variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-green*"
 	}
 }
 
 reversal-icon-theme-purple_package() {
-    color=purple
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - purple variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-purple*"
 	}
 }
 
 reversal-icon-theme-brown_package() {
-    color=brown
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - brown variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-brown*"
 	}
 }
 
 reversal-icon-theme-grey_package() {
-    color=grey
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - grey variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-grey*"
 	}
 }
 
 reversal-icon-theme-red_package() {
-    color=red
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - red variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-red*"
 	}
 }
 
 reversal-icon-theme-black_package() {
-    color=black
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - black variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-black*"
 	}
 }
 
 reversal-icon-theme-orange_package() {
-    color=orange
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - orange variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-orange*"
 	}
 }
 
 reversal-icon-theme-pink_package() {
-    color=pink
-    nostrip=yes
-	short_desc+=" - ${color} variant"
+	short_desc+=" - pink variant"
+	nostrip=yes
 	pkg_install() {
-        vmkdir ${icondir}
-        mkdir -p ${wrksrc}/icons
-        ./install.sh -${color} -d ${wrksrc}/icons
-        vcopy ${wrksrc}/icons/Reversal* ${icondir}
-        rm -r ${wrksrc}/icons/*
-        vlicense COPYING
+		vmove "usr/share/icons/Reversal-pink*"
+	}
+}
+
+reversal-icon-theme-cyan_package() {
+	short_desc+=" - cyan variant"
+	nostrip=yes
+	pkg_install() {
+		vmove "usr/share/icons/Reversal-cyan*"
 	}
 }
