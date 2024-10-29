@@ -1,26 +1,21 @@
 # Template file for 'pixelitos-icon-theme'
 pkgname=pixelitos-icon-theme
-version=2024.09.25
+version=2024.10.10
 revision=1
-repository=cereus-extra
+_commit="716936f7ad5633e0aca7d76dd2fa3a5d2c3c9be4"
 short_desc="Pixel art icon theme"
-_icondir="usr/share/icons/pixelitos"
-_commit="611ddfcb92f885a626093718022ae0b5224fb9e5"
-maintainer="ItsZariep <https://github.com/ItzSelenux>"
+maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="MIT"
 homepage="https://github.com/ItzSelenux/pixelitos-icon-theme"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=4326248e071c0d52dd324dcf3c16a4c4fe7809d63f4db3defb52a71bc85379cd
+checksum=9c2acdfd74acbc8570c0352b7c7b781837cef393d2ac86f7ac7218f08894958d
+_themedir="usr/share/icons/pixelitos"
+repository=cereus-extra
 
 do_install() {
-    # Delete unnecessary files
-    rm -r {.github,install.sh}
-
-    # Copy theme files to destdir
-    vmkdir ${_icondir}
-    vcopy * ${_icondir}/
-	
-    # Also add package license
-    vlicense LICENSE
+	vinstall index.theme 644 "${_themedir}"
+	for size in 16 128; do
+		vcopy ${size} "${_themedir}"
+	done
+	vlicense LICENSE
 }
-
