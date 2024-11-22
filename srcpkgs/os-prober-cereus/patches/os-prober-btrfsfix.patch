@@ -99,7 +99,7 @@ index e32dc84..2a60fa2 100755
 +		exit 1
 +	fi
 +	if [ "$mpoint" = "$tmpmnt" ]; then
-+		warn "btrfs subvol=$subvool, UUID=$UUID, already mounted on $tmpmnt **ERROR**"
++		warn "btrfs subvol=$subvol, UUID=$UUID, already mounted on $tmpmnt **ERROR**"
 +		umount "$tmpmnt" 2>/dev/null
 +		rmdir "$tmpmnt" 2>/dev/null
 +		exit 1

@@ -1,18 +1,19 @@
 # Template file for 'os-prober-cereus'
+# This package includes patches from os-prober-btrfs at AUR: https://aur.archlinux.org/packages/os-prober-btrfs 
 pkgname=os-prober-cereus
-version=1.81
-revision=2
-repository="cereus-extra"
-conflicts="os-prober"
-replaces="os-prober"
+version=1.83
+revision=1
 build_style=gnu-makefile
 make_dirs="/var/lib/os-prober 0755 root root"
-short_desc="Utility to detect other OSes on a set of drives (with additional patches to detect btrfs systems and other systems)"
+short_desc="Utility to detect other OSes on a set of drives (with extra patches)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-2.0-or-later"
 homepage="https://packages.debian.org/sid/os-prober"
 distfiles="${DEBIAN_SITE}/main/o/os-prober/os-prober_${version}.tar.xz"
-checksum=2fd928ec86538227711e2adf49cfd6a1ef74f6bb3555c5dad4e0425ccd978883
+checksum=8c82d5084c2b6f8935f6633612f18d16d04a0deffd6b99c264985fb7204140a6
+replaces="os-prober>=0"
+conflicts="os-prober"
+repository=cereus-extra
 
 case "$XBPS_TARGET_MACHINE" in
 	i686*|x86_64*) _ARCH="x86";;
