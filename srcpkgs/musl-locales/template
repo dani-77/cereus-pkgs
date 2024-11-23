@@ -1,24 +1,20 @@
 # Template file for 'musl-locales'
 pkgname=musl-locales
 version=2020.10.05
-revision=2
-archs="x86_64-musl aarch64-musl"
-wrksrc=${pkgname}-master
-_conf_dir="etc/default/"
+revision=3
+_commit="1101fb2bcdd189cd9415b8bd1c775eb43527d25c"
+archs="*-musl"
 build_style=cmake
 makedepends="gettext-devel musl-devel"
-depends="gettext"
 short_desc="Musl C library - locale data files"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-license="MIT, LGPL-3.0-or-later"
+license="MIT AND LGPL-3.0-or-later"
 homepage="https://gitlab.com/rilian-la-te/musl-locales"
-distfiles=${homepage}/-/archive/master/${pkgname}-master.tar.gz
-checksum=b51eb8893e2dbc4150f2378655b2a03df5468c519d7c8b5a106b285b6d191a15
-repository="cereus-extra"
+distfiles="${homepage}/-/archive/${_commit}.tar.gz"
+checksum=a213ac888a20a224f27f73178ed707fa17e4106cde38598ab3fe7600709ea89c
+repository=cereus-extra
 
 post_install() {
 	vlicense LICENSE
 	vlicense LICENSE.MIT
-	vmkdir ${_conf_dir}
-	vinstall ${FILESDIR}/${pkgname} 644 ${_conf_dir} ${pkgname}
 }
