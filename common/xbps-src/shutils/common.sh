@@ -499,7 +499,7 @@ setup_pkg() {
         *) msg_error "version must contain at least one digit.\n";;
     esac
 
-    # Check if base-chroot is already installed.
+    # Check if base-chroot-cereus is already installed.
     if [ -z "$bootstrap" -a -z "$CHROOT_READY" -a "z$show_problems" != "zignore-problems" ]; then
         msg_red "${pkg} is not a bootstrap package and cannot be built without it.\n"
         msg_error "Please install bootstrap packages and try again.\n"
