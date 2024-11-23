@@ -1,29 +1,32 @@
 # Template file for 'octoxbps-git'
+# Based on Void Linux's official octoxbps template:
+# https://github.com/void-linux/void-packages/blob/master/srcpkgs/octoxbps/template
 pkgname=octoxbps-git
 version=2024.07.29
 revision=2
+_commit="9c5111f1072ea48f755cbb44a21b97ca4deda853"
 build_style=qmake
-repository="cereus-extra"
-depends="curl qt-sudo"
+build_helper=qmake6
 hostmakedepends="pkg-config qt6-tools qt6-base"
 makedepends="qt6-declarative-devel qtermwidget-qt6-devel qt6-qt5compat-devel"
-_commit="9c5111f1072ea48f755cbb44a21b97ca4deda853"
+depends="curl qt-sudo"
 short_desc="Qt-based XBPS front-end (git development version)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-2.0-or-later"
 homepage="https://tintaescura.com/projects/octoxbps/"
-changelog="https://raw.githubusercontent.com/aarnt/octoxbps/master/CHANGELOG"
-conflicts="octoxbps"
-replaces="octoxbps"
+changelog="https://raw.githubusercontent.com/aarnt/octoxbps/${_commit}/CHANGELOG"
 distfiles="https://github.com/aarnt/octoxbps/archive/${_commit}.tar.gz"
 checksum=f480fc8f100b5a3bd8a5a3b0ad80f60033cdf8365ba0fc4d8247f9f49c214117
+conflicts="octoxbps"
+replaces="octoxbps>=0"
+repository=cereus-extra
 
 post_extract() {
 	# Experimental Spanish translation
-    cp ${FILESDIR}/octoxbps_es.ts ${wrksrc}/translations
+	cp ${FILESDIR}/octoxbps_es.ts "${wrksrc}/translations"
 
     # Correct qt-sudo path
-    vsed -i 's|/usr/local/bin/qt-sudo|/usr/bin/qt-sudo|g' src/constants.h
+	vsed -i 's/usr\/local/usr/g' src/constants.h
 }
 
 
@@ -32,7 +35,7 @@ post_configure() {
 	if [ "$CROSS_BUILD" ]; then
 		qmake_args="-qtconf ${wrksrc}/qt.conf"
 	fi
-	cd ${wrksrc}/notifier && /usr/lib/qt6/bin/qmake ${configure_args} \
+	cd ${wrksrc}/notifier && qmake-qt6 ${configure_args} \
 		QMAKE_CC=$CC QMAKE_CXX=$CXX QMAKE_LINK=$CXX QMAKE_LINK_C=$CC \
 		QMAKE_CFLAGS="${CFLAGS}" \
 		QMAKE_CXXFLAGS="${CXXFLAGS}" \
