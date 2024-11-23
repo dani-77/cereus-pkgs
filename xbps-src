@@ -786,7 +786,7 @@ case "$XBPS_TARGET" in
             msg_error "xbps-src: bootstrap <arch> is no longer supported, use '-A <arch>' instead\n"
             exit 1
         fi
-        # base-chroot building on host
+        # base-chroot-cereus building on host
         # check for required host utils
         check_reqhost_utils bootstrap
         (
@@ -794,7 +794,7 @@ case "$XBPS_TARGET" in
             export XBPS_SKIP_REMOTEREPOS=1
             chroot_sync_repodata
             $XBPS_LIBEXECDIR/build.sh \
-                base-chroot base-chroot $XBPS_TARGET || exit 1
+                base-chroot-cereus base-chroot-cereus $XBPS_TARGET || exit 1
         ) || exit 1
         [ -d $XBPS_MASTERDIR ] && rm -rf $XBPS_MASTERDIR
         install_base_chroot "$XBPS_MACHINE"

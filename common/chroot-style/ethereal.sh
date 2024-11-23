@@ -12,14 +12,14 @@
 # into /.xbps_chroot_init
 #
 # The supported way to make use of thie chroot-style is to create
-# a root filesystem that has base-chroot and git installed and
+# a root filesystem that has base-chroot-cereus and git installed and
 # have it inside a container engine like Docker.
 #
 # Docker example:
 # $ mkdir -p /tmp/image
 # $ xbps-install -y -r /tmp/image \
 #				 -R http://mirrors.servercentral.com/voidlinux/current \
-#				 -S base-chroot
+#				 -S base-chroot-cereus
 # $ tar -pC /tmp/image -c . | sudo docker import - voidlinux/masterdir
 # $ rm -rf /tmp/image
 # # docker run --rm -it \

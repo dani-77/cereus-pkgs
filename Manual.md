@@ -797,7 +797,7 @@ installing unnecessary packages in the build environment.
 During a build process, there are programs that must be _run_ on the host, such
 as `yacc` or the C compiler. The packages that contain these programs should be
 listed in `hostmakedepends`, and will be installed on the host when building the
-target package. Some of these packages are dependencies of the `base-chroot`
+target package. Some of these packages are dependencies of the `base-chroot-cereus`
 package and don't need to be listed. It is possible that some of the programs
 necessary to build a project are located in `-devel` packages.
 
