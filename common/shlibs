@@ -4573,3 +4573,4 @@ libfm-qt.so.14 libfm-qt-legacy-1.4.0_1
 libQt5XdgIconLoader.so.3 libqtxdg-legacy-3.12.0_1
 libkdecorations2.so.5 kdecoration-5.27.11_2
 libxed.so libxed-3.6.6_3
+libkwin.so.6 kwin-6.2.0_1

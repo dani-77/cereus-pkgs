@@ -1,0 +1,16 @@
+# Template file for 'kde-rounded-corners'
+pkgname=kde-rounded-corners
+version=0.6.7
+revision=1
+build_style=cmake
+hostmakedepends="qt6-tools-devel extra-cmake-modules gettext-devel "
+makedepends="kwin-devel kf6-kconfigwidgets-devel kf6-kcmutils-devel"
+short_desc="Rounds the corners of your windows in KDE Plasma 5 and 6"
+maintainer="Kevin Figueroa <kfdevart@disroot.org>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/matinlotfali/KDE-Rounded-Corners"
+changelog="${homepage}/releases/tag/v${version}"
+distfiles="${homepage}/archive/refs/tags/v${version}.tar.gz"
+checksum=65658a331fdca10accbe0dcc3356288b549a393288e15e7fa617d9b7c0186bbf
+repository=cereus-extra
+make_check=no # tests aren't made to run inside chroot
