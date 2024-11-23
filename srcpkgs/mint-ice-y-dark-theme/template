@@ -1,28 +1,19 @@
 # Template file for 'mint-ice-y-dark-theme'
 pkgname=mint-ice-y-dark-theme
-version=2022.06.02
+reverts="2022.06.02_1"
+version=2022.02.07
 revision=1
-create_wrksrc=yes
-repository="cereus-extra"
-theme_dir=usr/share/icewm/themes/
-hostmakedepends="bsdtar"
-makedepends=""
+_commit="4bdbcfff0d31873431ca029af05c05b320ef5754"
+_theme_dir="usr/share/icewm/themes/Mint-Ice-Y-Dark"
 short_desc="Mint-Y-like dark theme for IceWM"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-license="GPL-2.0"
+license="GPL-2.0-or-later"
 homepage="https://github.com/IamTheMasterRoy/IceWM-Themes"
-distfiles="${homepage}/raw/main/Mint-Ice-Y-Dark-Variants.tar.gz
-           https://raw.githubusercontent.com/IamTheMasterRoy/IceWM-Themes/main/LICENSE"
-checksum="236edeac9ca91a73625d702c95b95e39799fb3ee11200ac3d288946b2da874e5
- 8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
-
-do_extract() {
-    bsdtar -xvf ${XBPS_SRCDISTDIR}/${pkgname}-${version}/Mint-Ice-Y-Dark-Variants.tar.gz \
-        -C ${wrksrc}
-}
+distfiles="${homepage}/archive/${_commit}.tar.gz"
+checksum=d7ff6f77bc2260e33dd16866e34da5f20345eb5ee8009107e09b7fda646b497c
+repository=cereus-extra
 
 do_install() {
-    vmkdir ${theme_dir}
-    vcopy ./* ${theme_dir}
-    vlicense ${XBPS_SRCDISTDIR}/${pkgname}-${version}/LICENSE
+	vmkdir "${_theme_dir}"
+	vextract -C "${DESTDIR}/${_theme_dir}" Mint-Ice-Y-Dark-Variants.tar.gz
 }
