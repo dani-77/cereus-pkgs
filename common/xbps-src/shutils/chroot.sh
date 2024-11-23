@@ -18,9 +18,9 @@ install_base_chroot() {
     if [ $? -ne 0 ]; then
         msg_error "xbps-src: failed to install base-chroot-cereus!\n"
     fi
-    # Reconfigure base-files to create dirs/symlinks.
-    if xbps-query -r $XBPS_MASTERDIR base-files &>/dev/null; then
-        XBPS_ARCH=$XBPS_TARGET_PKG xbps-reconfigure -r $XBPS_MASTERDIR -f base-files &>/dev/null
+    # Reconfigure base-files-cereus to create dirs/symlinks.
+    if xbps-query -r $XBPS_MASTERDIR base-files-cereus &>/dev/null; then
+        XBPS_ARCH=$XBPS_TARGET_PKG xbps-reconfigure -r $XBPS_MASTERDIR -f base-files-cereus &>/dev/null
     fi
 
     msg_normal "xbps-src: installed base-chroot-cereus successfully!\n"
@@ -115,15 +115,15 @@ chroot_prepare() {
         [ ! -d $XBPS_MASTERDIR/$f ] && mkdir -p $XBPS_MASTERDIR/$f
     done
 
-    # Copy /etc/passwd and /etc/group from base-files.
-    cp -f $XBPS_SRCPKGDIR/base-files/files/passwd $XBPS_MASTERDIR/etc
+    # Copy /etc/passwd and /etc/group from base-files-cereus.
+    cp -f $XBPS_SRCPKGDIR/base-files-cereus/files/passwd $XBPS_MASTERDIR/etc
     echo "$(whoami):x:$(id -u):$(id -g):$(whoami) user:/tmp:/bin/xbps-shell" \
         >> $XBPS_MASTERDIR/etc/passwd
-    cp -f $XBPS_SRCPKGDIR/base-files/files/group $XBPS_MASTERDIR/etc
+    cp -f $XBPS_SRCPKGDIR/base-files-cereus/files/group $XBPS_MASTERDIR/etc
     echo "$(whoami):x:$(id -g):" >> $XBPS_MASTERDIR/etc/group
 
-    # Copy /etc/hosts from base-files.
-    cp -f $XBPS_SRCPKGDIR/base-files/files/hosts $XBPS_MASTERDIR/etc
+    # Copy /etc/hosts from base-files-cereus.
+    cp -f $XBPS_SRCPKGDIR/base-files-cereus/files/hosts $XBPS_MASTERDIR/etc
 
     # Prepare default locale: en_US.UTF-8.
     if [ -s ${XBPS_MASTERDIR}/etc/default/libc-locales ]; then

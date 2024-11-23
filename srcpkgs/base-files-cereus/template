@@ -1,15 +1,14 @@
-# Template file for 'base-files'
-pkgname=base-files
+# Template file for 'base-files-cereus'
+pkgname=base-files-cereus
 version=2024.02.12
-revision=1
+revision=2
 bootstrap=yes
-repository=cereus-core
 depends="xbps-triggers"
 short_desc="Cereus Linux base system files"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="Public Domain"
-homepage="https://cereuslinuxproject.github.io"
-conflicts="base-files>=0.77"
+homepage="https://cereus-linux.codeberg.page"
+conflicts="base-files<=1.0"
 conf_files="
 	/etc/inputrc
 	/etc/profile
@@ -32,6 +31,7 @@ conf_files="
 replaces="base-directories>=0"
 # New system groups
 system_groups="kvm:24 plugdev:26 usbmon:27 sgx:28"
+repository=cereus-core
 
 do_install() {
 	# Create bin and lib dirs and symlinks.
@@ -104,4 +104,10 @@ do_install() {
 	# os-release in the expected places
 	vinstall ${FILESDIR}/os-release 644 /usr/lib/
 	ln -s ../usr/lib/os-release ${DESTDIR}/etc/os-release
+}
+
+base-files_package() {
+	build_style=meta
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - transitional dummy package"
 }

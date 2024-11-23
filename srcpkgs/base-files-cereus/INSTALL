@@ -49,7 +49,7 @@ make_system_dirs() {
 	ln -sf ../run/lock .
 	[ ! -d spool/mail ] && ln -sfn ../mail spool/mail
 	if [ -L spool/mail/mail -a "$(readlink spool/mail/mail)" = spool/mail ]; then
-		# Get rid of broken symlink created by older versions of base-files.
+		# Get rid of broken symlink created by older versions of base-files-cereus.
 		rm spool/mail/mail
 	fi
 	cd ..
