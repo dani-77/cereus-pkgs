@@ -1,0 +1,24 @@
+# Template file for 'klassy-qt5'
+pkgname=klassy-qt5
+version=6.2.breeze6.2.1
+revision=1
+build_style=cmake
+configure_args="-DBUILD_QT6=OFF
+ -DKF5_HOST_TOOLING=/usr/lib/cmake"
+hostmakedepends="extra-cmake-modules qt5-qmake qt5-host-tools
+ gettext kcmutils-devel kpackage-devel kconfig-devel kcoreaddons-devel"
+makedepends="frameworkintegration-devel kcmutils-devel fftw-devel
+ plasma-framework-devel"
+depends="frameworkintegration klassy-qt6"
+short_desc="Customizable binary window decoration and theme plugin for KDE Plasma"
+maintainer="Kevin Figueroa <kfdevart@disroot.org>"
+license="GPL-2.0-or-later"
+homepage="https://github.com/paulmcauley/klassy"
+changelog="${homepage}/releases/tag/${version}"
+distfiles="${homepage}/archive/refs/tags/${version}.tar.gz"
+checksum=658c183b182fd86316e3a055f51d31e77a77a283be641908b6d4469a5ce9d035
+repository=cereus-extra
+
+post_install() {
+	rm -rf ${DESTDIR}/usr/share
+}
