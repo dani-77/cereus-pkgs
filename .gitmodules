@@ -1,3 +1,0 @@
-[submodule "srcpkgs/MEGAsync"]
-	path = srcpkgs/MEGAsync
-	url = https://github.com/ibhagwan/megasync-template

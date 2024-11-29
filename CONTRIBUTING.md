@@ -23,7 +23,7 @@ Packages related to cryptocurrencies (wallets, miners, nodes, etc) are not accep
 
 Complex or heavy to build packages (like Chromium or Firefox based browsers) are preferred to use precompiled binaries. This also applies for Electron-based packages since some depend in a Electron version that is not available in Void repository (and it is unlikely that we maintain newer versions). Otherwise, it is likely it won't be accepted. However, if you're willing to take care of it, chances it get accepted will be higher. 
 
-An external template or binary repository may be added, as submodule in this repository (see MEGAsync submodule as example) or as a drop-in repository file (see [ungoogled-chromium-repo](https://codeberg.org/cereus-linux/cereus-pkgs/src/branch/master/srcpkgs/ungoogled-chromium-repo/template)), after proper review.
+An external template or binary repository may be added, as submodule in this repository or as a drop-in repository file(see [ungoogled-chromium-repo](https://codeberg.org/cereus-linux/cereus-pkgs/src/branch/master/srcpkgs/ungoogled-chromium-repo/template)) respectively, after proper review.
 
 Preferrably and when available, use software in their stable releases. Betas, templates using tip of development branch and releases created by the package maintainer may be accepted if the package is not available in a stable release or it does provides a considerable value that is not available on stable releases.
 
