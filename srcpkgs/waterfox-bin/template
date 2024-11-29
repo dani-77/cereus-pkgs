@@ -2,8 +2,8 @@
 # Reference was taken from https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=waterfox-bin
 pkgname=waterfox-bin
 _pkgname=${pkgname%-bin}
-version=G6.0.20
-revision=2
+version=6.5.2
+revision=1
 archs="x86_64"
 build_style=fetch
 depends="ffmpeg hicolor-icon-theme startup-notification libnotify libXt
@@ -14,7 +14,7 @@ license="MPL-2.0"
 homepage="https://www.waterfox.net"
 changelog="${homepage}/docs/releases/${version}/"
 distfiles="https://cdn1.waterfox.net/${_pkgname}/releases/${version}/Linux_x86_64/${_pkgname}-${version}.tar.bz2"
-checksum=7035d9cd1ecdd13c7728a9f918638afd5e322422b53e3c3b4b89e26b6361e342
+checksum=b023a872065b33831cf2601f133e143c9f1ad9a81e9a800b2398d50cfeb40c1f
 replaces="waterfox-g4-bin>=0 waterfox-g5-bin>=0"
 repository=cereus-extra
 
@@ -47,6 +47,5 @@ do_install() {
 waterfox-g6-bin_package() {
 	build_style=meta
 	depends="${sourcepkg}>=${version}_${revision}"
-	reverts="6.0.19_1 6.0.18_1 6.0.17_1 6.0.16_1 6.0.15_1"
 	short_desc+=" - transitional dummy package"
 }
