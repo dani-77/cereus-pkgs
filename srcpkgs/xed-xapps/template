@@ -1,7 +1,7 @@
 # Template file for 'xed-xapps'
 pkgname=xed-xapps
-version=3.6.6
-revision=3
+version=3.6.7
+revision=1
 build_style=meson
 build_helper=gir
 hostmakedepends="meson xapps-devel intltool itstool cmake pkg-config gtk-doc"
@@ -13,7 +13,7 @@ maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-2.0-or-later"
 homepage="https://github.com/linuxmint/xed"
 distfiles="${homepage}/archive/${version}.tar.gz"
-checksum=1a5b7163eba370c10a57eee6dde5d21d7ffca5ba09ebd98be737f909b0c63503
+checksum=dc9af1c9175e03cc9c3a65d4c06191ca1adac1365b0f93b5cf242dcc03ae837a
 # both provide xed bin and man at the same path
 conflicts="xed"
 # needs dogtail which is not packaged and it doesn't seems to work inside a chroot
