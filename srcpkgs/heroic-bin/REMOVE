@@ -4,7 +4,7 @@ case "$ACTION" in
 post)
 
 #
-# After removing opt/heroic*/, xbps removes opt if empty!
+# After removing opt/Heroic/, xbps removes opt if empty!
 # This script restores opt
 #
         mkdir -p opt
