@@ -1,23 +1,25 @@
 # Template file for 'sgnotes'
 pkgname=sgnotes
-version=2024.09.29
-revision=2
+version=2024.11.23
+revision=1
+_commit="b8891ff18b4930d314f58b219a02db94f73cc768"
 build_style=gnu-makefile
-makedepends="gtk+3-devel gtksourceview-devel pkg-config"
-_commit="9318a20251447462d1cd55ead4cf58d008db838e"
+make_use_env=1
+make_build_args="WITHSOURCEVIEW=1"
+hostmakedepends="pkg-config"
+makedepends="gtk+3-devel gtksourceview4-devel"
 short_desc="Simple GTK Notes App"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-repository="cereus-extra"
 license="GPL-3.0-or-later"
-homepage="https://github.com/sgde/sgnotes"
+homepage="https://codeberg.org/ItsZariep/SGNotes"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=4121c754dbd95948307253eddf4c5c2c6eacf9ed2ffe4f2b2e6420f7bfcee0be
+checksum=08880fa98dda144755d64300d9c8fb90073e0cc96ad7601a99ad2e02ed5ddb01
+repository=cereus-extra
 
-do_build() {
-	make
-}
+make_check=no # directly runs the binary
 
 do_install() {
-	vbin sgnotes
-	vinstall sgnotes.desktop 644 usr/share/applications
+	vbin ${pkgname}
+	vinstall ${pkgname}.desktop 644 usr/share/applications/
+	vinstall icons/${pkgname}.svg 644 usr/share/icons/hicolor/64x64/apps/
 }
