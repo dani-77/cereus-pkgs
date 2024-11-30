@@ -20,6 +20,6 @@ lightly-qt6-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision}"
 	short_desc+=" - development files"
 	pkg_install() {
-		vmove usr/lib/cmake/*
+		vmove usr/lib/cmake
 	}
 }
