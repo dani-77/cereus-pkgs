@@ -1,5 +1,5 @@
-# Template file for 'lightly-git'
-pkgname=lightly-git
+# Template file for 'lightly-qt5-git'
+pkgname=lightly-qt5-git
 version=2023.12.29
 revision=5
 _commit="3a2af2cb61e68f2baa1d12241e93c20719aa6bf2"
@@ -21,10 +21,22 @@ post_install() {
 	rm -rf ${DESTDIR}/usr/share
 }
 
-lightly-git-devel_package() {
+lightly-qt5-git-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision}"
 	short_desc+=" - development files"
 	pkg_install() {
-		vmove usr/lib/cmake/*
+		vmove usr/lib/cmake
 	}
+}
+
+lightly-git_package() {
+	build_style=meta
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - transitional dummy package"
+}
+
+lightly-git-devel_package() {
+	build_style=meta
+	depends="${sourcepkg}-devel>=${version}_${revision}"
+	short_desc+=" - transitional dummy package"
 }
