@@ -1,7 +1,7 @@
 # Template file for 'klassy-qt6'
 pkgname=klassy-qt6
 version=6.2.breeze6.2.1
-revision=1
+revision=2
 build_style=cmake
 configure_args="-DBUILD_QT5=OFF
  -DKF6_HOST_TOOLING=/usr/lib/cmake
@@ -22,3 +22,11 @@ changelog="${homepage}/releases/tag/${version}"
 distfiles="${homepage}/archive/refs/tags/${version}.tar.gz"
 checksum=658c183b182fd86316e3a055f51d31e77a77a283be641908b6d4469a5ce9d035
 repository=cereus-extra
+
+klassy-qt6-devel_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/lib/cmake
+	}
+}
