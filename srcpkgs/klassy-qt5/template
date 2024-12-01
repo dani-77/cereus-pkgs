@@ -1,7 +1,7 @@
 # Template file for 'klassy-qt5'
 pkgname=klassy-qt5
 version=6.2.breeze6.2.1
-revision=1
+revision=2
 build_style=cmake
 configure_args="-DBUILD_QT6=OFF
  -DKF5_HOST_TOOLING=/usr/lib/cmake"
@@ -9,7 +9,7 @@ hostmakedepends="extra-cmake-modules qt5-qmake qt5-host-tools
  gettext kcmutils-devel kpackage-devel kconfig-devel kcoreaddons-devel"
 makedepends="frameworkintegration-devel kcmutils-devel fftw-devel
  plasma-framework-devel"
-depends="frameworkintegration klassy-qt6"
+depends="klassy-qt6"
 short_desc="Customizable binary window decoration and theme plugin for KDE Plasma"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-2.0-or-later"
