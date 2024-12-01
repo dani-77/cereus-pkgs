@@ -1,0 +1,430 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b30451c..4f80603 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,9 +3,10 @@ project(lightly)
+ set(PROJECT_VERSION "6.80")
+ set(PROJECT_VERSION_MAJOR 6)
+ 
+-
+-set(KF6_MIN_VERSION "5.240.0")
++set(KF5_MIN_VERSION "5.102.0")
++set(KF6_MIN_VERSION "6.2.0")
+ set(KDE_COMPILERSETTINGS_LEVEL "5.82")
++set(QT5_MIN_VERSION "5.15.2")
+ set(QT_MIN_VERSION "6.6.0")
+ 
+ include(GenerateExportHeader)
+@@ -13,7 +14,8 @@ include(WriteBasicConfigVersionFile)
+ include(FeatureSummary)
+ include(GNUInstallDirs)
+ 
+-find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
++find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
++#find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH}  ${CMAKE_SOURCE_DIR}/cmake)
+ 
+ set(CMAKE_CXX_STANDARD 20)
+@@ -28,81 +30,160 @@ include(KDEGitCommitHooks)
+ 
+ include(GtkUpdateIconCache)
+ 
++option(BUILD_QT5 "Build with QT5" ON)
++option(BUILD_QT6 "Build with QT6" ON)
++
++set(QT_NO_CREATE_VERSIONLESS_TARGETS ON)
++set(QT_NO_CREATE_VERSIONLESS_FUNCTIONS ON)
++
+ if(WIN32 OR APPLE)
+     set(WITH_DECORATIONS OFF)
+ endif()
+ 
+-set(QT_MAJOR_VERSION 6)
+-include(KDEInstallDirs6)
+-include(KDECMakeSettings)
+-
+-option(WITH_DECORATIONS "Build Lightly window decorations for KWin" ON)
+-
+-find_package(Qt6 ${QT_MIN_VERSION} REQUIRED CONFIG COMPONENTS Widgets DBus)
+-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
+-        CoreAddons
+-        ColorScheme
+-        Config
+-        GuiAddons
+-        I18n
+-        IconThemes
+-        WindowSystem)
+-    if(NOT WIN32 AND NOT APPLE)
+-        find_package(KF6KCMUtils ${KF6_MIN_VERSION})
+-        set_package_properties(KF6KCMUtils PROPERTIES
+-            TYPE REQUIRED
+-            DESCRIPTION "Helps create configuration modules"
+-            PURPOSE "KCMUtils used for the configuration modules or the decoration and Qt Style"
+-        )
+-    endif()
++function(build_qt5)
++    set(QT_MAJOR_VERSION 5)
++    include(KDEInstallDirs5)
++    include(KDECMakeSettings)
++    option(WITH_DECORATIONS "Build Lightly window decorations for KWin" ON)
++
++    find_package(Qt5 ${QT5_MIN_VERSION} REQUIRED CONFIG COMPONENTS Widgets DBus)
++    find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
++            CoreAddons
++            Config
++            GuiAddons
++            I18n
++            IconThemes
++            WindowSystem)
++        if(NOT WIN32 AND NOT APPLE)
++            find_package(KF5KCMUtils ${KF5_MIN_VERSION})
++            set_package_properties(KF5KCMUtils PROPERTIES
++                TYPE REQUIRED
++                DESCRIPTION "Helps create configuration modules"
++                PURPOSE "KCMUtils used for the configuration modules or the decoration and Qt Style"
++            )
++        endif()
++
++    find_package(Qt5 ${QT5_MIN_VERSION} OPTIONAL_COMPONENTS Quick)
++        if(${Qt5Quick_FOUND})
++        find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS Kirigami2)
++        endif()
++
++    find_package(KF5FrameworkIntegration ${KF5_MIN_VERSION} CONFIG )
++        set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
++            DESCRIPTION "KF${QT_MAJOR_VERSION} Framework Integration"
++            URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
++            TYPE OPTIONAL
++            PURPOSE "Required to use KStyle convenience functionalities in style")
++
++    set(LIGHTLY_HAVE_KSTYLE ${KF5FrameworkIntegration_FOUND})
++    set(LIGHTLY_HAVE_QTQUICK ${Qt5Quick_FOUND})
++
++
++    #add_subdirectory(colors)
++    add_subdirectory(kstyle kstyle5)
++    add_subdirectory(liblightlycommon liblightlycommon5)
++    #add_subdirectory(misc)
++    unset(QUERY_EXECUTABLE CACHE)
++endfunction()
++if(BUILD_QT5)
++    message("-- **** Build QT5 - On ****")
++    build_qt5()
++endif()
+ 
+-find_package(Qt6 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Quick)
+-    if(${Qt6Quick_FOUND})
+-        find_package(KF6KirigamiPlatform ${KF6_MIN_VERSION} REQUIRED)
++function(build_qt6)
++    set(QT_MAJOR_VERSION 6)
++    include(KDEInstallDirs6)
++    include(KDECMakeSettings)
++
++    option(WITH_DECORATIONS "Build Lightly window decorations for KWin" ON)
++
++    find_package(Qt6 ${QT_MIN_VERSION} REQUIRED CONFIG COMPONENTS Widgets DBus)
++    find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
++            CoreAddons
++            ColorScheme
++            Config
++            GuiAddons
++            I18n
++            IconThemes
++            WindowSystem)
++        if(NOT WIN32 AND NOT APPLE)
++            find_package(KF6KCMUtils ${KF6_MIN_VERSION})
++            set_package_properties(KF6KCMUtils PROPERTIES
++                TYPE REQUIRED
++                DESCRIPTION "Helps create configuration modules"
++                PURPOSE "KCMUtils used for the configuration modules or the decoration and Qt Style"
++            )
++        endif()
++
++    find_package(Qt6 ${QT_MIN_VERSION} OPTIONAL_COMPONENTS Quick)
++        if(${Qt6Quick_FOUND})
++            find_package(KF6KirigamiPlatform ${KF6_MIN_VERSION} REQUIRED)
++        endif()
++
++    find_package(KF6FrameworkIntegration ${KF6_MIN_VERSION} CONFIG )
++        set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
++            DESCRIPTION "KF${QT_MAJOR_VERSION} Framework Integration"
++            URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
++            TYPE OPTIONAL
++            PURPOSE "Required to use KStyle convenience functionalities in style")
++
++    set(LIGHTLY_HAVE_KSTYLE ${KF6FrameworkIntegration_FOUND})
++    set(LIGHTLY_HAVE_QTQUICK ${Qt6Quick_FOUND})
++
++
++    add_library(Qt::Core ALIAS Qt6::Core)
++    add_library(Qt::Gui ALIAS Qt6::Gui)
++    add_library(Qt::OpenGL ALIAS Qt6::OpenGL)
++    add_library(Qt::Network ALIAS Qt6::Network)
++    if(Qt6_VERSION_MINOR GREATER 6)
++        add_library(Qt::PlatformModuleInternal ALIAS Qt6::PlatformModuleInternal)
+     endif()
+ 
+-find_package(KF6FrameworkIntegration ${KF6_MIN_VERSION} CONFIG )
+-    set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
+-        DESCRIPTION "KF6 Framework Integration"
+-        URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
+-        TYPE OPTIONAL
+-        PURPOSE "Required to use KStyle convenience functionalities in style")
+-
+-set(LIGHTLY_HAVE_KSTYLE ${KF6FrameworkIntegration_FOUND})
+-set(LIGHTLY_HAVE_QTQUICK ${Qt6Quick_FOUND})
+-
+-
+-add_subdirectory(colors)
+-add_subdirectory(kstyle kstyle6)
+-add_subdirectory(liblightlycommon liblightlycommon6)
+-#add_subdirectory(misc)
++    #add_subdirectory(colors)
++    add_subdirectory(kstyle kstyle6)
++    add_subdirectory(liblightlycommon liblightlycommon6)
++    #add_subdirectory(misc)
+ 
+     if(WITH_DECORATIONS)
+         find_package(KDecoration2 REQUIRED)
+         add_subdirectory(kdecoration)
+     endif()
+ 
+-ki18n_install(po)
+-
+-# create a Config.cmake and a ConfigVersion.cmake file and install them
+-include(ECMSetupVersion)
+-ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX LIGHTLY
+-                 PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfigVersion.cmake"
+-                  )
+-
+-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Lightly")
++    ki18n_install(po)
++
++    # create a Config.cmake and a ConfigVersion.cmake file and install them
++    include(ECMSetupVersion)
++    ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX LIGHTLY
++                    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfigVersion.cmake"
++                    )
++
++    set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Lightly")
++
++    configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/LightlyConfig.cmake.in"
++                                    "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfig.cmake"
++                                    PATH_VARS KDE_INSTALL_FULL_DATADIR
++                                    INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
++                                )
++
++    install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfig.cmake"
++                    "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfigVersion.cmake"
++                DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
++                COMPONENT Devel
++            )
++    unset(QUERY_EXECUTABLE CACHE)
++endfunction()
++
++if(BUILD_QT6)
++    message("-- **** Build QT6 - On ****")
++    build_qt6()
++endif()
+ 
+-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/LightlyConfig.cmake.in"
+-                                  "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfig.cmake"
+-                                  PATH_VARS KDE_INSTALL_FULL_DATADIR
+-                                  INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+-                              )
++function(build_colors)
++    include(KDEInstallDirs)
++    add_subdirectory(colors)
++endfunction()
+ 
+-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfig.cmake"
+-                   "${CMAKE_CURRENT_BINARY_DIR}/LightlyConfigVersion.cmake"
+-            DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+-            COMPONENT Devel
+-          )
++build_colors()
+ 
+ # add clang-format target for all our real source files
+ file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
+diff --git a/kdecoration/CMakeLists.txt b/kdecoration/CMakeLists.txt
+index 7c365c4..11b8155 100644
+--- a/kdecoration/CMakeLists.txt
++++ b/kdecoration/CMakeLists.txt
+@@ -29,9 +29,7 @@ set_target_properties(lightlydecoration PROPERTIES
+ 
+ target_link_libraries(lightlydecoration
+      PUBLIC
+-        Qt::Core
+-        Qt::Gui
+-        Qt::DBus
++        Qt6::DBus
+         KDecoration2::KDecoration
+      PRIVATE
+         lightlycommon6
+@@ -43,8 +41,6 @@ target_link_libraries(lightlydecoration
+         KF6::WindowSystem
+         KF6::KCMUtils
+ )
+-
+ install(TARGETS lightlydecoration DESTINATION ${KDE_INSTALL_PLUGINDIR}/${KDECORATION_PLUGIN_DIR})
+ install(FILES config/lightlydecorationconfig.desktop DESTINATION  ${KDE_INSTALL_DATADIR}/kservices6)
+-
+ add_subdirectory(config)
+diff --git a/kstyle/animations/lightlydialdata.cpp b/kstyle/animations/lightlydialdata.cpp
+index 02d72f7..e8f05a3 100644
+--- a/kstyle/animations/lightlydialdata.cpp
++++ b/kstyle/animations/lightlydialdata.cpp
+@@ -71,7 +71,12 @@ namespace Lightly
+         QHoverEvent *hoverEvent = static_cast<QHoverEvent*>(event);
+ 
+         // store position
+-        _position = hoverEvent->position().toPoint();
++        _position =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++            hoverEvent->position().toPoint();
++#else
++            hoverEvent->pos();
++#endif
+ 
+         // trigger animation if position match handle rect
+         updateState( _handleRect.contains( _position ) );
+diff --git a/kstyle/animations/lightlyscrollbardata.cpp b/kstyle/animations/lightlyscrollbardata.cpp
+index 0ae4ca7..49d5c84 100644
+--- a/kstyle/animations/lightlyscrollbardata.cpp
++++ b/kstyle/animations/lightlyscrollbardata.cpp
+@@ -140,15 +140,25 @@ namespace Lightly
+         QStyleOptionSlider opt( qt_qscrollbarStyleOption( scrollBar ) );
+ 
+         // cast event
+-        QHoverEvent *hoverEvent = static_cast<QHoverEvent*>(event);
+-        QStyle::SubControl hoverControl = scrollBar->style()->hitTestComplexControl(QStyle::CC_ScrollBar, &opt, hoverEvent->position().toPoint(), scrollBar);
+-
++        QHoverEvent *hoverEvent = static_cast<QHoverEvent *>(event);
++
++        QStyle::SubControl hoverControl =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++        scrollBar->style()->hitTestComplexControl(QStyle::CC_ScrollBar, &opt, hoverEvent->position().toPoint(), scrollBar);
++#else
++        scrollBar->style()->hitTestComplexControl(QStyle::CC_ScrollBar, &opt, hoverEvent->pos(), scrollBar);
++#endif
+         // update hover state
+         updateAddLineArrow( hoverControl );
+         updateSubLineArrow( hoverControl );
+ 
+         // store position
+-        _position = hoverEvent->position().toPoint();
++        _position =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++            hoverEvent->position().toPoint();
++#else
++            hoverEvent->pos();
++#endif
+ 
+     }
+ 
+diff --git a/kstyle/lightlysplitterproxy.cpp b/kstyle/lightlysplitterproxy.cpp
+index 4960e62..d35bffb 100644
+--- a/kstyle/lightlysplitterproxy.cpp
++++ b/kstyle/lightlysplitterproxy.cpp
+@@ -262,11 +262,19 @@ namespace Lightly
+                 } else {
+ 
+                     // map event position to current splitter and post.
+-                   QMouseEvent copy(
+-                        mouseEvent->type(),
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++                    QMouseEvent copy(mouseEvent->type(),
+                         _splitter.data()->mapFromGlobal( mouseEvent->globalPosition() ),
+                         mouseEvent->button(),
+-                        mouseEvent->buttons(), mouseEvent->modifiers());
++                                     mouseEvent->buttons(),
++                                     mouseEvent->modifiers());
++#else
++                    QMouseEvent copy(mouseEvent->type(),
++                                     _splitter.data()->mapFromGlobal(mouseEvent->globalPos()),
++                                     mouseEvent->button(),
++                                     mouseEvent->buttons(),
++                                     mouseEvent->modifiers());
++#endif
+ 
+                     QCoreApplication::sendEvent( _splitter.data(), &copy );
+ 
+diff --git a/kstyle/lightlywindowmanager.cpp b/kstyle/lightlywindowmanager.cpp
+index fd04c1b..c883e7d 100644
+--- a/kstyle/lightlywindowmanager.cpp
++++ b/kstyle/lightlywindowmanager.cpp
+@@ -423,7 +423,12 @@ namespace Lightly
+         {
+             _quickTarget = item;
+             _dragPoint = mouseEvent->pos();
+-            _globalDragPoint = mouseEvent->globalPosition().toPoint();
++            _globalDragPoint =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++                mouseEvent->globalPosition().toPoint();
++#else
++                mouseEvent->globalPos();
++#endif
+ 
+             if( _dragTimer.isActive() ) _dragTimer.stop();
+             _dragTimer.start( _dragDelay, this );
+@@ -446,7 +451,12 @@ namespace Lightly
+         // save target and drag point
+         _target = widget;
+         _dragPoint = position;
+-        _globalDragPoint = mouseEvent->globalPosition().toPoint();
++        _globalDragPoint =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++            mouseEvent->globalPosition().toPoint();
++#else
++            mouseEvent->globalPos();
++#endif
+         _dragAboutToStart = true;
+ 
+         // send a move event to the current child with same position
+@@ -475,6 +485,14 @@ namespace Lightly
+         auto mouseEvent = static_cast<QMouseEvent*>( event );
+         if (mouseEvent->source() != Qt::MouseEventNotSynthesized)
+         { return false; }
++
++        auto eventPos =
++#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
++            mouseEvent->globalPosition().toPoint();
++#else
++            mouseEvent->globalPos();
++#endif
++
+         if( !_dragInProgress )
+         {
+ 
+@@ -489,8 +507,7 @@ namespace Lightly
+ 
+                 } else resetDrag();
+ 
+-            } else if (QPoint(mouseEvent->globalPosition().toPoint() - _globalDragPoint).manhattanLength() >= _dragDistance) {
+-
++            } else if (QPoint(eventPos - _globalDragPoint).manhattanLength() >= _dragDistance) {
+                 _dragTimer.start( 0, this );
+ 
+             }
+diff --git a/liblightlycommon/CMakeLists.txt b/liblightlycommon/CMakeLists.txt
+index 6a6711f..20e6564 100644
+--- a/liblightlycommon/CMakeLists.txt
++++ b/liblightlycommon/CMakeLists.txt
+@@ -15,8 +15,15 @@ generate_export_header(lightlycommon${QT_MAJOR_VERSION}
+ 
+ target_link_libraries(lightlycommon${QT_MAJOR_VERSION}
+     PUBLIC
+-        Qt::Core
+-        Qt::Gui)
++    Qt${QT_MAJOR_VERSION}::Core
++    Qt${QT_MAJOR_VERSION}::Gui
++    Qt${QT_MAJOR_VERSION}::Widgets
++
++    KF${QT_MAJOR_VERSION}::GuiAddons
++    KF${QT_MAJOR_VERSION}::ConfigCore
++    KF${QT_MAJOR_VERSION}::ConfigGui
++    KF${QT_MAJOR_VERSION}::IconThemes
++    KF${QT_MAJOR_VERSION}::I18n)
+ 
+ set_target_properties(lightlycommon${QT_MAJOR_VERSION} PROPERTIES
+     VERSION ${PROJECT_VERSION}
