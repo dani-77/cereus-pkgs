@@ -1,44 +1,31 @@
 # Template file for 'librewolf-bin'
 pkgname=librewolf-bin
-_realname=${pkgname%-bin}
-_version=131.0.3-1
-version=${_version//-/.}
+_pkgname=${pkgname%-bin}
+_version=133.0-1
+version=133.0.1
 revision=1
 archs="x86_64 i686"
-repository="cereus-extra"
 build_style="fetch"
-short_desc="Community-maintained fork of Firefox, focused on privacy, security and freedom - binary-based package"
+short_desc="Firefox fork focused on privacy, security and freedom (precompiled)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
-hostmakedepends="tar xz xbps-triggers"
-makedepends="xbps-triggers"
 license="MPL-2.0"
 homepage="https://gitlab.com/librewolf-community"
-distfiles="https://gitlab.com/api/v4/projects/44042130/packages/generic/${_realname}/${_version}/librewolf-${_version}-linux-${XBPS_TARGET_MACHINE}-package.tar.bz2"
+distfiles="https://gitlab.com/api/v4/projects/44042130/packages/generic/${_pkgname}/${_version}/${_pkgname}-${_version}-linux-${XBPS_TARGET_MACHINE}-deb.deb"
+conflicts="librewolf"
+repository=cereus-extra
 
 if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
-	checksum=4da39fe59f0d32b9c1a16c9e0d900487bcba6f9f18e27cb60386125086a1d687
-else
-	checksum=7ee0b078d39747c4b8b19e1d7cf84aba3801b962b22653dde09fd57ef5b417c1
+	checksum=cec1840a81a334f9a0157656b71e4d5f0485fbc511c366c82e83b5c8fc50883e
+elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
+	checksum=341879c97a33f3d1e60ef6586ca15359b34da4b3d9838cbcf2cd5830b303a0a7
 fi
 
 do_install() {
-	vmkdir opt/${_realname}
-	bsdtar -C ${DESTDIR}/opt/ -xf librewolf-${_version}-linux-${XBPS_TARGET_MACHINE}-package.tar.bz2
-    vmkdir usr/bin
-    ln -rs ${DESTDIR}/opt/${_realname}/${_realname} ${DESTDIR}/usr/bin
-
-    # Copy launcher
-    vmkdir usr/share/applications
-	vcopy ${FILESDIR}/${_realname}.desktop  usr/share/applications
-
-    # Install the icons
-    for res in 16 32 48 64 128; do
-		vmkdir usr/share/icons/hicolor/${res}x${res}/apps
-                vcopy ${DESTDIR}/opt/${_realname}/browser/chrome/icons/default/default${res}.png \
-                        usr/share/icons/hicolor/${res}x${res}/apps/${_realname}.png
-    done
-
-    vinstall ${FILESDIR}/${_realname}.svg 0644 \
-	usr/share/icons/hicolor/scalable/apps/
-
+	vextract -C ${DESTDIR} ${_pkgname}-${_version}-linux-${XBPS_TARGET_MACHINE}-deb.deb
+	# xbps-src doesn't allow ELF files in /usr/share
+	mv ${DESTDIR}/usr/share/${_pkgname} ${DESTDIR}/usr/lib
+	# recreate symlink
+	ln -frs ${DESTDIR}/usr/lib/${_pkgname}/${_pkgname} ${DESTDIR}/usr/bin
+	# correct path in launcher
+	vsed -i 's|usr/share|usr/lib|g' ${DESTDIR}/usr/share/applications/${_pkgname}.desktop
 }
