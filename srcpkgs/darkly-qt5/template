@@ -1,6 +1,6 @@
-# Template file for 'lightly-qt5'
-pkgname=lightly-qt5
-version=0.5.8
+# Template file for 'darkly-qt5'
+pkgname=darkly-qt5
+version=0.5.16
 revision=1
 build_style=cmake
 configure_args="-DBUILD_QT6=OFF
@@ -11,17 +11,23 @@ hostmakedepends="extra-cmake-modules"
 makedepends="qt5-declarative-devel qt5-x11extras-devel kguiaddons-devel
  kconfigwidgets-devel kwindowsystem-devel gettext-devel kiconthemes-devel
  kcmutils-devel kirigami2-devel frameworkintegration-devel"
-depends="lightly-qt6"
+depends="darkly-qt6"
 short_desc="Modern style for Qt5 applications"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-2.0-or-later"
-homepage="https://github.com/Bali10050/Lightly"
-distfiles="https://github.com/Bali10050/Lightly/archive/refs/tags/v${version}.tar.gz"
-checksum=8827645429ce625039e2b4ebd4002fc1362ad1dd123b16a1a77feb1ff9ecde53
+homepage="https://github.com/Bali10050/Darkly"
+distfiles="${homepage}/archive/refs/tags/v${version}.tar.gz"
+checksum=bbc520b89bf1164501f019864b4edaa35b2dd4209c7f74b7cca10ca1ca96060c
 repository=cereus-extra
 
 post_install() {
 	rm -rf ${DESTDIR}/usr/share
+}
+
+lightly-qt5_package() {
+	build_style=meta
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - transitional dummy package"
 }
 
 lightly-git_package() {
