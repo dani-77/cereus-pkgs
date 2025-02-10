@@ -1,67 +1,45 @@
 # Template file for 'cereus-artwork'
 pkgname=cereus-artwork
 version=2023.01.31
-revision=1
+revision=2
 _wallpaperdir="usr/share/backgrounds"
 _icondir="usr/share/icons/hicolor"
-_logodir="usr/share/cereus-artwork"
 _commit="7d2c92125dae9db643e490194fd6188d322427d5"
-repository="cereus-core"
 short_desc="Cereus Linux artwork"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="CC-BY-SA-4.0"
 homepage="https://codeberg.org/cereus-linux/artwork"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
 checksum=22cbf5270ccff6ca876d88fbcfc5c7438411c83b7498741d116659f2034f5d8f
+repository=cereus-core
 
 do_install() {
-	# Create directories in targetdir
-	for dir in ${_wallpaperdir} ${_icondir} ${_logodir}
-		do vmkdir ${dir}
-	done
-
-
-	# Create wallpaper list
-	for format in jpg png
-		do ls --color=never wallpapers/*.${format} >> list.txt
-	done
-
-	ls --color=never wallpapers/*.svg > svg-list.txt
-
 	# Install wallpapers
-	for wall in $(cat list.txt); do
-        	vinstall ${wall} 0644 usr/share/backgrounds
- 	done
-
-	for svg in $(cat svg-list.txt); do
-                vinstall ${svg} 0644 usr/share/backgrounds/svg/
-        done
-
+	for wall in wallpapers/*.{jpg,png,svg}; do
+		case ${wall} in
+			*.jpg|*.png) _destpath="${_wallpaperdir}" ;;
+			*.svg) _destpath="${_wallpaperdir}/svg" ;;
+		esac
+		vinstall "${wall}" 0644 "${_destpath}"
+	done
 
 	# Install icons
-
-    for logo in cereus-logo{,-dark,-light}; do
-	    vinstall Branding/${logo}-512x512.svg 0644 \
-		    ${_icondir}/scalable/apps ${logo}.svg
-    done
-
-	for res in 16 22 32 48 64 128 256 512
-		do vinstall Branding/cereus-logo-${res}x${res}.png 0644 \
-			${_icondir}/${res}x${res}/apps/ cereus-logo.png
+	for logo in cereus-logo{,-dark,-light}; do
+		vinstall Branding/${logo}-512x512.svg 0644 \
+			"${_icondir}/scalable/apps" ${logo}.svg
 	done
 
-	for res in 16 22 32 48 64 128 256 512
-		do vinstall Branding/cereus-logo-light-${res}x${res}.png 0644 \
-			${_icondir}/${res}x${res}/apps/ cereus-logo-light.png
-	done
-
-	for res in 16 22 32 48 64 128 256 512
-		do vinstall Branding/cereus-logo-dark-${res}x${res}.png 0644 \
-			${_icondir}/${res}x${res}/apps/ cereus-logo-dark.png
+	for res in 16 22 32 48 64 128 256 512; do
+		for logo in cereus-logo{,-dark,-light}; do
+			vinstall Branding/${logo}-${res}x${res}.png 0644 \
+				"${_icondir}/${res}x${res}/apps" ${logo}.png
+		done
 	done
 
 	# Install logos
-	vcopy Branding/* ${_logodir}
+	for f in Branding/*.{svg,png}; do
+		vinstall "${f}" 0644 "usr/share/cereus-artwork"
+	done
 
 	# Install license
 	vlicense LICENSE
