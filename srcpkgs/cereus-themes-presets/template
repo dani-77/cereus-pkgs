@@ -2,11 +2,10 @@
 pkgname=cereus-themes-presets
 version=2024.02.20
 revision=1
-repository="cereus-core"
 conf_files="
-    /etc/gtk-3.0/settings.ini
-    /etc/Kvantum/kvantum.kvconfig
-    /etc/skel/.gtkrc-2.0"
+	/etc/gtk-3.0/settings.ini
+	/etc/Kvantum/kvantum.kvconfig
+	/etc/skel/.gtkrc-2.0"
 depends="kvantum Graphite-kvantum-theme-black Graphite-gtk-theme-black Tela-icon-theme-green Graphite-color-schemes-black Graphite-cursors jetbrains-mono-font fonts-roboto-ttf"
 _commit="a0f759925101fb0724e5e54afb997efe3981798d"
 short_desc="Cereus Linux default theme configurations"
@@ -16,10 +15,11 @@ homepage="https://codeberg.org/cereus-linux/presets"
 changelog="${homepage}/commits/main/global"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
 checksum=690bab356a19b03f768c582ed841b4e12fab7af1890998da8ca5aaeb60f250de
+repository="cereus-core"
 
 do_install() {
-    cd global/etc
-    vinstall gtk-3.0/settings.ini 0644 /etc/gtk-3.0/
-    vinstall Kvantum/kvantum.kvconfig 0644 /etc/Kvantum/
-    vinstall skel/.gtkrc-2.0 0644 /etc/skel/
+	cd global/etc
+	vinstall gtk-3.0/settings.ini 0644 /etc/gtk-3.0/
+	vinstall Kvantum/kvantum.kvconfig 0644 /etc/Kvantum/
+	vinstall skel/.gtkrc-2.0 0644 /etc/skel/
 }
