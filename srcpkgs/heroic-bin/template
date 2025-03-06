@@ -1,7 +1,7 @@
 # Template file for 'heroic-bin'
 pkgname=heroic-bin
-version=2.15.2
-revision=2
+version=2.16.0
+revision=1
 archs="x86_64"
 depends="fuse gawk zstd vulkan-loader"
 short_desc="Native GOG, Amazon and Epic Games Launcher (precompiled binaries)"
@@ -9,15 +9,17 @@ maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-only"
 homepage="https://heroicgameslauncher.com"
 changelog="https://github.com/releases/tag/v${version}"
-distfiles="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v${version}/heroic_${version}_amd64.deb"
-checksum=92fd0968a6601077fdc730a3d350b200d4e91b3dc50ac144023ce58a6d5aedaf
+distfiles="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v${version}/Heroic-${version}-linux-amd64.deb"
+checksum=01ab826ed1a8e346c09cfa1085a2863b21de9428f92a7a6e4cd8f6b4a5e780f0
 repository=cereus-extra
 nopie=yes
 
-skip_extraction="heroic_${version}_amd64.deb"
+skiprdeps="/opt/Heroic/resources/app.asar.unpacked/build/bin/arm64/linux/comet
+ /opt/Heroic/resources/app.asar.unpacked/build/bin/arm64/linux/vulkan-helper"
+skip_extraction="Heroic-${version}-linux-amd64.deb"
 
 do_install() {
-	vsrcextract -C "${DESTDIR}/" heroic_${version}_amd64.deb
+	vsrcextract -C "${DESTDIR}/" Heroic-${version}-linux-amd64.deb
 	vmkdir usr/bin
 	ln -rs /opt/Heroic/heroic "${DESTDIR}/usr/bin/heroic"
 }
