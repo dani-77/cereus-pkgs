@@ -1,7 +1,8 @@
 # Template file for 'harmonymusic-bin'
 pkgname=harmonymusic-bin
-version=1.11.0
+version=1.11.2
 revision=1
+_debrev=24
 archs="x86_64"
 build_style=fetch
 short_desc="Cross platform app for streaming music"
@@ -9,12 +10,12 @@ maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/anandnet/Harmony-Music"
 changelog="https://raw.githubusercontent.com/anandnet/Harmony-Music/refs/tags/v${version}/CHANGELOG.md"
-distfiles="${homepage}/releases/download/v${version}/harmonymusic-${version}.deb"
-checksum=40aac10fa3d232ca78751b50df749445106c15c25afee32a09403ec4bbbea634
+distfiles="${homepage}/releases/download/v${version}/harmonymusic-${version}+${_debrev}-linux.deb"
+checksum=39259c61d12ac7e6897b3896168a07c512227dbfdb2b0d78c861d995668856c1
 repository=cereus-extra
 
 do_install() {
-	vextract -C "${DESTDIR}" harmonymusic-${version}.deb 
+	vextract -C "${DESTDIR}" "harmonymusic-${version}+${_debrev}-linux.deb"
 	vmkdir opt
 	mv "${DESTDIR}/usr/share/harmonymusic" "${DESTDIR}/opt"
 	vbin ${FILESDIR}/harmonymusic.sh harmonymusic
