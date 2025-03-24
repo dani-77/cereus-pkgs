@@ -1,22 +1,23 @@
 # Template file for 'alttab-git'
 pkgname=alttab-git
-version=2024.09.26
-revision=2
+version=2025.03.09
+revision=1
 build_style=gnu-configure
 hostmakedepends="pkg-config"
-repository="cereus-extra"
 makedepends="libX11-devel libXft-devel libXmu-devel libXrandr-devel
  libXrender-devel libpng-devel libXpm-devel uthash automake"
 checkdepends="procps-ng xvfb-run xeyes xprop"
-_commit="2c4c750e3d1813e7c75dce1058d24fb3d4cc3c80"
+_commit="5229de0960dbbce9bdba7d36aff134b4a9e65d11"
 short_desc="Task switcher for minimalistic window managers - git development branch"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/sagb/alttab"
 changelog="https://github.com/sagb/alttab/raw/master/ChangeLog"
-replaces="alttab"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=59b643c9c5cedd9cde4a02c1bd1efcd9683bb9b5c871dea4c271664f029b7160
+checksum=e60db6c6d2f0d30f33b536d2d5e58b8c7ab6207bf5397bf3297d0165e6e5f8a8
+conflicts="alttab"
+replaces="alttab>=0"
+repository=cereus-extra
 
 make_check=no # needs cnee/xnee which is not packaged
 
