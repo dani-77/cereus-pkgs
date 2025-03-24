@@ -17,7 +17,7 @@ distfiles="${homepage}/archive/refs/tags/${version}.tar.gz"
 checksum=423a1aba7fedb85c38746b8e238ef4749c6598d676db939be0c1b05b53094e2b
 repository=cereus-extra
 
-post_install() {	
+post_install() {
 	for license in MIT MPL-2.0; do vlicense LICENSES/$license; done
 	vsconf compfy.sample.conf
 }
