@@ -2,7 +2,6 @@
 pkgname=flat-remix-icon-theme
 version=2024.02.01
 revision=2
-_version=${version//./}
 build_style=gnu-makefile
 depends="${pkgname}-black
  ${pkgname}-blue ${pkgname}-brown ${pkgname}-cyan ${pkgname}-green ${pkgname}-grey
@@ -12,7 +11,7 @@ short_desc="Icon theme inspired by material design with colorful palette"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/daniruiz/flat-remix"
-distfiles="${homepage}/archive/refs/tags/${_version}.tar.gz"
+distfiles="${homepage}/archive/refs/tags/${version//./}.tar.gz"
 checksum=f4ad5c51cfa72ccb6829b53f704529e96e44ef076fa58178132e56459a325702
 repository=cereus-extra
 
@@ -29,7 +28,7 @@ flat-remix-icon-theme-black_package() {
 	}
 }
 
-flat-remix-icon-theme-blue_package() {    
+flat-remix-icon-theme-blue_package() {
 	short_desc+=" - blue variant"
 	nostrip=yes
 	pkg_install() {
