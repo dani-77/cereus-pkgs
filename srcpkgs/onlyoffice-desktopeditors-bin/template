@@ -2,18 +2,18 @@
 # Reference was taken from AUR: https://aur.archlinux.org/packages/onlyoffice-bin
 pkgname=onlyoffice-desktopeditors-bin
 _pkgname=${pkgname%-bin}
-version=8.2.1
+version=8.3.2
 revision=1
 archs="x86_64"
 depends="curl xdg-utils dejavu-fonts-ttf liberation-fonts-ttf
  gst-plugins-ugly1 desktop-file-utils hicolor-icon-theme"
-short_desc="Office suite with text, spreadsheet and presentation editors (precompiled)"
+short_desc="Office suite with text, spreadsheet & presentation editors (precompiled)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="AGPL-3.0-only"
 homepage="https://www.onlyoffice.com"
 changelog="https://github.com/ONLYOFFICE/DesktopEditors/blob/master/CHANGELOG.md"
 distfiles="https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v${version}/${_pkgname}_amd64.deb"
-checksum="a6d77d89a2dfc8aed1ec79150d437e6c0fd5705b3d6bcf4b9d4794ff6bf0fea3"
+checksum=ba91a330b3495189caccee14b38b7ea91b9c2a5880a290e4c2696c617f112daf
 repository=cereus-extra
 nopie=yes
 
