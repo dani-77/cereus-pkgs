@@ -1,27 +1,27 @@
 # Template file for 'librewolf-bin'
 pkgname=librewolf-bin
 _pkgname=${pkgname%-bin}
-_version=133.0-1
-version=133.0.1
+version=136.0.4
 revision=1
+_pkgrel=1
 archs="x86_64 i686"
 build_style="fetch"
 short_desc="Firefox fork focused on privacy, security and freedom (precompiled)"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="MPL-2.0"
-homepage="https://gitlab.com/librewolf-community"
-distfiles="https://gitlab.com/api/v4/projects/44042130/packages/generic/${_pkgname}/${_version}/${_pkgname}-${_version}-linux-${XBPS_TARGET_MACHINE}-deb.deb"
+homepage="https://codeberg.org/librewolf"
+distfiles="https://gitlab.com/api/v4/projects/44042130/packages/generic/${_pkgname}/${version}-${_pkgrel}/${_pkgname}-${version}-${_pkgrel}-linux-${XBPS_TARGET_MACHINE}-deb.deb"
 conflicts="librewolf"
 repository=cereus-extra
 
 if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
-	checksum=cec1840a81a334f9a0157656b71e4d5f0485fbc511c366c82e83b5c8fc50883e
+	checksum=4538422d5d934832f87573d8d8e873c802c6e7a1190c90baacf5e9a3d881efdc
 elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
-	checksum=341879c97a33f3d1e60ef6586ca15359b34da4b3d9838cbcf2cd5830b303a0a7
+	checksum=2cc4cb06693cf7212525d7ddf567fe06e8135cc373f823ef36cab29183ed657d
 fi
 
 do_install() {
-	vextract -C ${DESTDIR} ${_pkgname}-${_version}-linux-${XBPS_TARGET_MACHINE}-deb.deb
+	vextract -C ${DESTDIR} ${_pkgname}-${version}-${_pkgrel}-linux-${XBPS_TARGET_MACHINE}-deb.deb
 	# xbps-src doesn't allow ELF files in /usr/share
 	mv ${DESTDIR}/usr/share/${_pkgname} ${DESTDIR}/usr/lib
 	# recreate symlink
