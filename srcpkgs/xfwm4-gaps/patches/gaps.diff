@@ -20,23 +20,21 @@ index 83e873ff6..b44afac5d 100644
  title_font=Sans Bold 9
  title_horizontal_offset=0
 diff --git a/src/client.c b/src/client.c
-index 0b9c55668..656dbd122 100644
+index 2b8506626..04a338d00 100644
 --- a/src/client.c
 +++ b/src/client.c
-@@ -3296,58 +3296,65 @@ static gboolean
- clientNewTileSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositionType tile)
+@@ -3292,56 +3292,63 @@ static gboolean
+ clientNewTileSize (Client *c, XWindowChanges *wc, GdkRectangle rect, tilePositionType tile)
  {
-     GdkRectangle full;
+     GdkRectangle full = clientMaxSpaceForGeometry (c, rect);
 +    ScreenInfo *screen_info;
 +    int gi, go, tr;
- 
-     clientMaxSpaceForGeometry (c, rect, &full);
- 
++
 +    screen_info = c->screen_info;
 +    gi = screen_info->params->gaps_inner; /* Gaps between windows */
 +    go = screen_info->params->gaps_outer; /* Gaps between screen border and windows */
 +    tr = screen_info->params->tile_ratio; /* Left windows width percentage */
-+
+ 
      switch (tile)
      {
          case TILE_UP:
@@ -120,7 +118,7 @@ index 0b9c55668..656dbd122 100644
 +            wc->height = full.height / 2 - frameExtentTop (c) - frameExtentBottom (c) - go - gi;
              break;
          default:
-             break;
+             return FALSE;
 diff --git a/src/settings.c b/src/settings.c
 index 8fa35cde5..728a91a2a 100644
 --- a/src/settings.c
