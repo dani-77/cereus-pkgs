@@ -30,6 +30,7 @@ depends="
 	xfwm4-lxqt
 	material-black-cereus-xfwm
 	cereus-themes-presets
+	cereus-lxqt-presets
 	xdg-desktop-portal-lxqt
 	xdg-utils
 	elogind
