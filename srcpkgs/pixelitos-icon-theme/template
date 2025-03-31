@@ -1,21 +1,27 @@
 # Template file for 'pixelitos-icon-theme'
 pkgname=pixelitos-icon-theme
-version=2024.10.10
+version=2025.02.23
 revision=1
-_commit="716936f7ad5633e0aca7d76dd2fa3a5d2c3c9be4"
+hostmakedepends="ImageMagick"
+depends="hicolor-icon-theme breeze-icons"
 short_desc="Pixel art icon theme"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="MIT"
 homepage="https://github.com/ItzSelenux/pixelitos-icon-theme"
-distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=9c2acdfd74acbc8570c0352b7c7b781837cef393d2ac86f7ac7218f08894958d
+distfiles="${homepage}/archive/refs/tags/${version//./}.tar.gz"
+checksum=423ae3ad8f9fce1dd1a803211d575173db0fa65de0d6d840df92b468758d2c8d
 _themedir="usr/share/icons/pixelitos"
 repository=cereus-extra
 
 do_install() {
-	vinstall index.theme 644 "${_themedir}"
-	for size in 16 128; do
-		vcopy ${size} "${_themedir}"
+	mkdir -p 128
+	for variant in blue green linuxmint red; do
+		cp -rf folder-colors/${variant}/16/places/* 16/places/
+		vsed -i 's|Name=.*|Name=Pixelitos-'"${variant}"'|g' index.theme
+		cp -r 16/* 128
+		find 128 -type f -name "*.png" -mmin -1 -exec mogrify -resize 128x128! -filter point -verbose {} \;
+		vinstall index.theme 644 ${_themedir}-${variant}
+		for size in 16 128; do vcopy ${size} ${_themedir}-${variant}; done
 	done
 	vlicense LICENSE
 }
