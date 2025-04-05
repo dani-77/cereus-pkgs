@@ -1,8 +1,8 @@
 # Template file for 'picom-git'
 pkgname=picom-git
-version=2024.11.21
+version=2025.02.21
 revision=1
-_commit="fcb4a2dc9c2ac9f50b087e4039fdc1ec5da119f5"
+_commit="b99537235bf858ccf527217bfc196d4923a3e3a1"
 build_style=meson
 configure_args="-Dwith_docs=true"
 hostmakedepends="pkg-config asciidoc ruby-asciidoctor"
@@ -14,7 +14,7 @@ maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="MPL-2.0 AND MIT"
 homepage="https://github.com/yshui/picom/"
 distfiles="${homepage}/archive/${_commit}.tar.gz"
-checksum=571a57ec8f7f1d949ac91ef818538c37485b300f3249f8390cf119345c85ff2c
+checksum=1b699eca7c7892e4dd68fbade1ebe216f2bdad9341f313d7f765b011d5d897b8
 provides="picom"
 conflicts="picom picom-jonaburg picom-jonaburg-fix picom-ibhagwan picom-arian8j2
  picom-dccsillag picom-ftlabs"
