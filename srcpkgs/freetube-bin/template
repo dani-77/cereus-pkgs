@@ -13,7 +13,7 @@ changelog="https://github.com/FreeTubeApp/FreeTube/releases/tag/v${version}"
 distfiles="https://github.com/FreeTubeApp/Freetube/releases/download/v${version}-beta/${pkgname%-bin}_${version}_amd64.deb
  https://github.com/FreeTubeApp/FreeTube/blob/v${version}-beta/LICENSE"
 checksum="66724db6cb021d2fc5809a49deb46fc9ce9c26294733a364f6b6d9b9d2e80932
- 10717fe3bda1be33a28e74dd4a21d9993432fc56cf54d08b8a4bbb01bb640d11"
+ 89155109a64273371a7d57e1b4c33b3c612dc36e4a76ed10e2f61a179564f514"
 nopie=yes
 repository=cereus-extra
 
