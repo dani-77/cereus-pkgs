@@ -1,7 +1,7 @@
 # Template file for 'librewolf-bin'
 pkgname=librewolf-bin
 _pkgname=${pkgname%-bin}
-version=136.0.4
+version=137.0.1
 revision=1
 _pkgrel=1
 archs="x86_64 i686"
@@ -15,9 +15,9 @@ conflicts="librewolf"
 repository=cereus-extra
 
 if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
-	checksum=4538422d5d934832f87573d8d8e873c802c6e7a1190c90baacf5e9a3d881efdc
+	checksum=cb2a54ee5cca71e488fca60c8d09af495ef196915493a6be08cafa10ac042c4e
 elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
-	checksum=2cc4cb06693cf7212525d7ddf567fe06e8135cc373f823ef36cab29183ed657d
+	checksum=cca1fc7c8906cbf381ae2d05aaa7192a496fcaa59ff3f9dad70f60c664bcc087
 fi
 
 do_install() {
