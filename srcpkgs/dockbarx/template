@@ -1,12 +1,12 @@
 # Template file for 'dockbarx'
 pkgname=dockbarx
 version=1.0.beta4
-revision=3
+revision=4
 _pkgrel=${version//.b/-b}
 build_style=python3-pep517
 hostmakedepends="python3-polib python3-setuptools"
 depends="libkeybinder3 python3-cairo python3-dbus python3-gobject python3-Pillow
-python3-xlib python3-xdg"
+python3-xlib python3-xdg libwnck"
 short_desc="Taskbar with groupping and group manipulation"
 maintainer="Kevin Figueroa <kfdevart@disroot.org>"
 license="GPL-3.0-or-later"
