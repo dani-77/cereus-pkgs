@@ -1,6 +1,6 @@
 # Template file for 'qownnotes'
 pkgname=qownnotes
-version=25.4.2
+version=25.4.3
 revision=1
 build_style=qmake
 build_helper=qmake6
@@ -15,7 +15,7 @@ license="GPL-2.0-or-later"
 homepage="https://github.com/pbek/QOwnNotes"
 changelog="https://raw.githubusercontent.com/pbek/QOwnNotes/refs/tags/v${version}/CHANGELOG.md"
 distfiles="${homepage}/releases/download/v${version}/qownnotes-${version}.tar.xz"
-checksum=144ddd1d72e953171436ffd181b4d11044caacc1115d9c2bce722c2b561e8d26
+checksum=063b51ad1455ed1b383d36bb0d9dfe7c57e9c7bb07ef1b6fb1fd402d452f8ddd
 repository=cereus-extra
 
 post_install() {
