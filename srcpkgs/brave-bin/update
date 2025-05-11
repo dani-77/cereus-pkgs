@@ -1,2 +1,1 @@
-site='https://brave.com/latest/desktop/index.xml'
-pattern='(?<=v)(\d+\.\d+\.\d+)'
+site='https://github.com/brave/brave-browser/releases/latest'
