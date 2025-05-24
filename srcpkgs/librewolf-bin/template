@@ -1,23 +1,22 @@
 # Template file for 'librewolf-bin'
 pkgname=librewolf-bin
 _pkgname=${pkgname%-bin}
-version=137.0.1
+version=138.0.4
 revision=1
 _pkgrel=1
 archs="x86_64 i686"
 build_style="fetch"
 short_desc="Firefox fork focused on privacy, security and freedom (precompiled)"
-maintainer="Kevin Figueroa <kfdevart@disroot.org>"
+maintainer="Daniel Azevedo <daniazevedo77@posteo.net>"
 license="MPL-2.0"
 homepage="https://codeberg.org/librewolf"
 distfiles="https://gitlab.com/api/v4/projects/44042130/packages/generic/${_pkgname}/${version}-${_pkgrel}/${_pkgname}-${version}-${_pkgrel}-linux-${XBPS_TARGET_MACHINE}-deb.deb"
 conflicts="librewolf"
-repository=cereus-extra
 
 if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
-	checksum=cb2a54ee5cca71e488fca60c8d09af495ef196915493a6be08cafa10ac042c4e
+	checksum=9b850d9b0ae780f2490e2235fa1f8f81ea6fad86e9068cacf33c52f670c1f927
 elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
-	checksum=cca1fc7c8906cbf381ae2d05aaa7192a496fcaa59ff3f9dad70f60c664bcc087
+	checksum=9b850d9b0ae780f2490e2235fa1f8f81ea6fad86e9068cacf33c52f670c1f927
 fi
 
 do_install() {
