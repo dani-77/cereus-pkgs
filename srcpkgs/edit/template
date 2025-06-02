@@ -1,0 +1,25 @@
+# Template file for 'edit'
+pkgname=edit
+version=1.1.0
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="tar"
+makedepends=""
+depends=""
+short_desc="editor from Microsoft"
+maintainer="Daniel Azevedo <daniazevedo77@posteo.net>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/microsoft/edit"
+#changelog=""
+distfiles="https://github.com/dani-77/${pkgname}/archive/refs/tags/${version}.tar.gz"
+checksum=c88120f3acaaeca85445ff8377e6f78054413627c048e63f2a5bd1bcdbbf6111
+
+do_install() {
+	vcopy "${name}-${version}/target/release/edit" ${DESTDIR}/usr/bin/
+}

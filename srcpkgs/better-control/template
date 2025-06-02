@@ -1,6 +1,6 @@
 # Template file for 'better-control'
 pkgname=better-control
-version=6.11.9
+version=6.12.0
 revision=1
 #archs="i686 x86_64"
 #build_wrksrc=
@@ -19,4 +19,4 @@ license="GPL-3.0-or-later"
 homepage="https://github.com/quantumvoid0/better-control/blob/main/README.md#-installation"
 changelog="https://github.com/quantumvoid0/better-control/releases/tag/v6.11.9"
 distfiles="https://github.com/quantumvoid0/${pkgname}/archive/refs/tags/v${version}.tar.gz"
-checksum=2fd9f53323e91069573e36e54466afeb337a1f907546f146d4375ddb867a11d8
+checksum=3d2584d99af8bf01b937823b172e954c580d4648718e8c4fb7ab7afbfce02fc4
